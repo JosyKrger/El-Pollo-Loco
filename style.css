@@ -1,0 +1,83 @@
+body {
+    margin: 0;
+    font-family: 'Arima';
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('img/5_background/desert-background4.png');
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+
+canvas {
+    background-color: black;
+}
+
+.d_none {
+    display: none;
+}
+
+h1 {
+    font-size: 45px;
+    letter-spacing: 4px;
+    margin-bottom: 0;
+}
+
+.start_screen {
+    width: 720px;
+    height: 480px;
+}
+
+.start_screen img {
+    height: 480px;
+    width: 720px;
+    background-size: cover;
+}
+
+.header {
+    display: flex;
+    margin-left: 30px;
+    margin-right: 30px;
+    justify-content: space-between;
+}
+
+.start_screen img {
+    margin-top: 3px;
+    height: 30px;
+    width: 30px;
+}
+
+.btn {
+    font-family: 'Arima';
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    height: 40px;
+    width: 150px;
+    background-color: #FEB13B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.info_div {
+    background-color: #FEB13B;
+    width: 720px;
+    height: 480px;
+}
+
+.dialog {
+    z-index: 1;
+    width: 720px;
+    height: 480px;
+    background-color: black;
+}
