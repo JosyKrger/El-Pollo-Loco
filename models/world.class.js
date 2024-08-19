@@ -86,7 +86,7 @@ class World {
 
 
     flipImageBack(mo) {
-         mo.x = mo.x * -1;
+        mo.x = mo.x * -1;
         this.ctx.restore();
     }
 
@@ -95,19 +95,28 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isCollidingFromAbove(enemy)) {
                 enemy.die();
-                this.character.jump(); 
-                return false; 
+                this.character.jump();
+                return false;
             } else if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.health.setHealthPercentage(this.character.energy);
             }
 
             this.throwableObjects.forEach((bottle) => {
-                if (bottle.isColliding(enemy)) {
-                    this.endboss.setEndbossPercentage(this.endboss.endboss_percentage - 20);
-                    console.log(this.endboss.endboss_percentage);
-                    this.throwableObjects = this.throwableObjects.filter(obj => obj !== bottle);
-                }
+                this.level.enemies.forEach((enemy) => {
+                    if (bottle.isColliding(enemy)) {
+                        // Überprüfe, ob es sich um den Endboss handelt
+                        if (enemy instanceof Endboss) {
+                            this.endboss.setEndbossPercentage(this.endboss.endboss_percentage - 20);
+                            console.log(this.endboss.endboss_percentage);
+                        } else {
+                            // Für andere Feinde wie Chicken oder Chick
+                            enemy.die(); // Starte die Sterbeanimation und entferne den Feind
+                        }
+                        // Entferne die Flasche nach der Kollision
+                        this.throwableObjects = this.throwableObjects.filter(obj => obj !== bottle);
+                    }
+                });
             });
 
             return true;
