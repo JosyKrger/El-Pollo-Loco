@@ -1,6 +1,7 @@
 class EndbossStatusbar extends DrawableObejct {
     
     endboss_percentage = 100;
+    energy = 100;
 
     ENDBOSS_STATUS = [
         'img/7_statusbars/2_statusbar_endboss/blue/blue0.png',

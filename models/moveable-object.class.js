@@ -8,7 +8,7 @@ class MoveableObject extends DrawableObejct {
 
 
     moveLeft() {
-        setInterval(() => {
+        this.moveInterval = setInterval(() => {
             this.x -= this.speed;
         }, 1000 / 60);
     }
@@ -68,5 +68,11 @@ class MoveableObject extends DrawableObejct {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
         return timepassed < 0.5;
+    }
+
+
+    isCollidingFromAbove(mo) {
+        return this.isColliding(mo) && // Erst normale Kollision prüfen
+               this.y + this.height <= mo.y + mo.height / 2; // Prüfen, ob die Kollision von oben kommt
     }
 }

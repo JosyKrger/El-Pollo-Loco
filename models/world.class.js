@@ -86,17 +86,31 @@ class World {
 
 
     flipImageBack(mo) {
-        mo.x = mo.x * -1;
+         mo.x = mo.x * -1;
         this.ctx.restore();
     }
 
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isCollidingFromAbove(enemy)) {
+                enemy.die();
+                this.character.jump(); 
+                return false; 
+            } else if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.health.setHealthPercentage(this.character.energy);
             }
+
+            this.throwableObjects.forEach((bottle) => {
+                if (bottle.isColliding(enemy)) {
+                    this.endboss.setEndbossPercentage(this.endboss.endboss_percentage - 20);
+                    console.log(this.endboss.endboss_percentage);
+                    this.throwableObjects = this.throwableObjects.filter(obj => obj !== bottle);
+                }
+            });
+
+            return true;
         });
 
         this.level.coins = this.level.coins.filter((coin) => {
