@@ -33,20 +33,18 @@
 
 </head>
 
-<body onload="init()">
+<body>
 
     <h1>El Pollo Loco</h1>
 
 
-    <!--
-    <div class="start_screen d_none" id="startScreen">
-        <img src="./img/9_intro_outro_screens/start/startscreen_1.png" alt="">
+    <div class="start_screen" id="startScreen">
         <div class="header">
             <button id="controlButton" class="btn">Control</button>
             <div id="dialog" class="dialog d_none">
 
             </div>
-            <button id="startButton" class="btn" onclick="initLevel()">Start</button>
+            <button id="startButton" class="btn" onclick="init(); startGame()">Start</button>
             <button id="settingButton" class="btn">Settings<img
                     src="./img/9_intro_outro_screens/start/settings-icon.png" alt="Settings"></button>
             <div id="dialog" class="dialog d_none">
@@ -54,9 +52,9 @@
             </div>
         </div>
     </div>
-    -->
 
-    <canvas id="canvas" width="720px" height="480px"> 
+
+    <canvas id="canvas" width="720px" height="480px" class="d_none"> 
 
     </canvas>
 

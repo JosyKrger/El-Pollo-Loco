@@ -60,3 +60,9 @@ window.addEventListener("keyup", (event) => {
         keyboard.D = false;
     }
 });
+
+
+function startGame() {
+    closeStartScreen = document.getElementById('startScreen').classList.add('d_none');
+    startTheGame = document.getElementById('canvas').classList.remove('d_none');
+}
