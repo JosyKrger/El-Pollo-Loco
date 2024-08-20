@@ -22,6 +22,7 @@ class World {
         this.run();
     }
 
+
     setWorld() {
         this.character.world = this;
     }
@@ -100,15 +101,18 @@ class World {
             } else if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.health.setHealthPercentage(this.character.energy);
+                console.log(this.character.energy);
             }
 
             this.throwableObjects.forEach((bottle) => {
                 this.level.enemies.forEach((enemy) => {
                     if (bottle.isColliding(enemy)) {
-                        // Überprüfe, ob es sich um den Endboss handelt
                         if (enemy instanceof Endboss) {
                             this.endboss.setEndbossPercentage(this.endboss.endboss_percentage - 20);
-                            console.log(this.endboss.endboss_percentage);
+                            if (this.endboss.endboss_percentage <= 0) {
+                                console.log("Endboss ist tot");
+                                this.checkEndbossDeath();
+                            }
                         } else {
                             // Für andere Feinde wie Chicken oder Chick
                             enemy.die(); // Starte die Sterbeanimation und entferne den Feind
@@ -137,6 +141,17 @@ class World {
             }
             return true;
         });
+    }
+
+
+    checkEndbossDeath() {
+        let endbossChicken = this.level.enemies.find(enemy => enemy instanceof Endboss);
+        console.log(endbossChicken);
+        
+        if (this.endboss.endboss_percentage <= 0) {
+            console.log("Energie der Statusbar ist 0 oder kleiner als 0");
+                endbossChicken.playAnimation(endbossChicken.IMAGES_DEAD);
+        }
     }
 
 
