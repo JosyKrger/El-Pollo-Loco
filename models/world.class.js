@@ -1,10 +1,11 @@
 class World {
-    health = new HealthStatusbar();
-    coins = new CoinStatusbar();
-    bottles = new BottleStatusbar();
-    endboss = new EndbossStatusbar();
     character = new Character();
+    healthStatusbar = new HealthStatusbar();
+    coinsStatusbar = new CoinStatusbar();
+    bottlesStatusbar = new BottleStatusbar();
+    endbossStatusbar = new EndbossStatusbar();
     throwBottle = new ThrowableObject();
+    endboss = new Endboss();
     throwableObjects = [];
     level = level1;
     canvas;
@@ -39,10 +40,10 @@ class World {
 
         this.ctx.translate(-this.camera_x, 0);
 
-        this.addToMap(this.health);
-        this.addToMap(this.coins);
-        this.addToMap(this.bottles);
-        this.addToMap(this.endboss);
+        this.addToMap(this.healthStatusbar);
+        this.addToMap(this.coinsStatusbar);
+        this.addToMap(this.bottlesStatusbar);
+        this.addToMap(this.endbossStatusbar);
 
         this.ctx.translate(this.camera_x, 0);
 
@@ -57,8 +58,8 @@ class World {
     }
 
 
-    addObjectsToMap(obejects) {
-        obejects.forEach(o => {
+    addObjectsToMap(objects) {
+        objects.forEach(o => {
             this.addToMap(o);
         });
     }
@@ -93,23 +94,27 @@ class World {
 
 
     checkCollisions() {
+        if (this.character.x >= 2800) {
+            console.log("Character hat x = 2800 erreicht");
+            // Hier kannst du weitere Aktionen ausführen, die du benötigst, z.B. den Endboss aktivieren
+            // this.endboss.activate();
+        }
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isCollidingFromAbove(enemy)) {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
                 enemy.die();
                 this.character.jump();
                 return false;
             } else if (this.character.isColliding(enemy)) {
                 this.character.hit();
-                this.health.setHealthPercentage(this.character.energy);
-                console.log(this.character.energy);
+                this.healthStatusbar.setHealthPercentage(this.character.energy);
             }
 
             this.throwableObjects.forEach((bottle) => {
                 this.level.enemies.forEach((enemy) => {
                     if (bottle.isColliding(enemy)) {
                         if (enemy instanceof Endboss) {
-                            this.endboss.setEndbossPercentage(this.endboss.endboss_percentage - 20);
-                            if (this.endboss.endboss_percentage <= 0) {
+                            this.endbossStatusbar.setEndbossPercentage(this.endbossStatusbar.endboss_percentage - 20);
+                            if (this.endbossStatusbar.endboss_percentage <= 0) {
                                 console.log("Endboss ist tot");
                                 this.checkEndbossDeath();
                             }
@@ -128,7 +133,7 @@ class World {
 
         this.level.coins = this.level.coins.filter((coin) => {
             if (this.character.isColliding(coin)) {
-                this.coins.setCoinPercentage(this.coins.coin_percentage + 20);
+                this.coinsStatusbar.setCoinPercentage(this.coinsStatusbar.coin_percentage + 20);
                 return false;
             }
             return true;
@@ -136,7 +141,7 @@ class World {
 
         this.level.bottles = this.level.bottles.filter((bottle) => {
             if (this.character.isColliding(bottle)) {
-                this.bottles.setBottlePercentage(this.bottles.bottle_percentage + 20);
+                this.bottlesStatusbar.setBottlePercentage(this.bottlesStatusbar.bottle_percentage + 20);
                 return false;
             }
             return true;
@@ -144,13 +149,19 @@ class World {
     }
 
 
+    startFightingEndboss() {
+
+    }
+
+
     checkEndbossDeath() {
         let endbossChicken = this.level.enemies.find(enemy => enemy instanceof Endboss);
-        console.log(endbossChicken);
-        
-        if (this.endboss.endboss_percentage <= 0) {
+
+        if (this.endbossStatusbar.endboss_percentage < 0) {
             console.log("Energie der Statusbar ist 0 oder kleiner als 0");
+            setInterval(() => {
                 endbossChicken.playAnimation(endbossChicken.IMAGES_DEAD);
+            }, 2000);
         }
     }
 
@@ -158,23 +169,25 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
+        }, 50);
+        setInterval(() => {
             this.checkThrowObjects();
-        }, 100);
+        }, 150);
     }
 
 
     checkThrowObjects() {
         // if (this.bottles.bottle_percentage > 0) {
-            if (this.keyboard.D) {
-                let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-                this.throwableObjects.push(bottle);
-                this.reduceBottleStatusBar();
-            }
+        if (this.keyboard.D) {
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            this.throwableObjects.push(bottle);
+            this.reduceBottleStatusBar();
+        }
         // }
     }
 
 
     reduceBottleStatusBar() {
-        this.bottles.setBottlePercentage(this.bottles.bottle_percentage - 20);
+        this.bottlesStatusbar.setBottlePercentage(this.bottlesStatusbar.bottle_percentage - 20);
     }
 }

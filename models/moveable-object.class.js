@@ -22,6 +22,17 @@ class MoveableObject extends DrawableObejct {
     }
 
 
+    playAnimationOnce(images) {
+        setInterval( ()=> {
+            if (this.currentImage < images.length) {
+                let path = images[this.currentImage];
+                this.img = this.imageCache[path];
+                this.currentImage++;
+            }
+        }, 100);
+    }
+
+
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -43,9 +54,9 @@ class MoveableObject extends DrawableObejct {
 
     isColliding(mo) {
         return this.x + this.width > mo.x &&
-               this.y + this.height > mo.y &&
-               this.x < mo.x + mo.width &&
-               this.y < mo.y + mo.height;
+            this.y + this.height > mo.y &&
+            this.x < mo.x + mo.width &&
+            this.y < mo.y + mo.height;
     }
 
 
@@ -68,11 +79,5 @@ class MoveableObject extends DrawableObejct {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
         return timepassed < 0.5;
-    }
-
-
-    isCollidingFromAbove(mo) {
-        return this.isColliding(mo) && // Erst normale Kollision prüfen
-               this.y + this.height <= mo.y + mo.height / 2; // Prüfen, ob die Kollision von oben kommt
     }
 }

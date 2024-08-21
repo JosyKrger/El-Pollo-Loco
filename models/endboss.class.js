@@ -1,6 +1,6 @@
 class Endboss extends MoveableObject {
 
-    x = 3500; 
+    x = 400; //3500;
     y = 50;
     height = 400;
     width = 400;
@@ -22,16 +22,20 @@ class Endboss extends MoveableObject {
     ];
 
     currentImage = 0;
+    hadFirstContact = false;
 
-    constructor() {
+    constructor(world, character) {
         super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
+        this.world = world;
+        this.character = character;
         this.loadImages(this.IMAGES_WALKING);
-        this.loadImages(this.IMAGES_DEAD)
+        this.loadImages(this.IMAGES_DEAD);
         this.animate();
     }
 
 
     animate() {
+        // let i = 0;
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
         }, 600);

@@ -8,6 +8,12 @@ function init() {
 }
 
 
+function startGame() {
+    closeStartScreen = document.getElementById('startScreen').classList.add('d_none');
+    startTheGame = document.getElementById('canvas').classList.remove('d_none');
+}
+
+
 window.addEventListener("keydown", (event) => {
     if (event.keyCode == 39) {
         keyboard.RIGHT = true;
@@ -60,9 +66,3 @@ window.addEventListener("keyup", (event) => {
         keyboard.D = false;
     }
 });
-
-
-function startGame() {
-    closeStartScreen = document.getElementById('startScreen').classList.add('d_none');
-    startTheGame = document.getElementById('canvas').classList.remove('d_none');
-}
