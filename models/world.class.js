@@ -94,10 +94,10 @@ class World {
 
 
     checkCollisions() {
-        if (this.character.x >= 2800) {
-            console.log("Character hat x = 2800 erreicht");
+        if (this.character.x >= 4500) {
+            console.log("character: ", this.character.x);
             // Hier kannst du weitere Aktionen ausführen, die du benötigst, z.B. den Endboss aktivieren
-            // this.endboss.activate();
+            this.endboss.activateAlertMode(); 
         }
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
@@ -146,11 +146,6 @@ class World {
             }
             return true;
         });
-    }
-
-
-    startFightingEndboss() {
-
     }
 
 

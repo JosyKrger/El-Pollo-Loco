@@ -47,33 +47,48 @@ class Endboss extends MoveableObject {
     ];
 
     currentImage = 0;
-    hadFirstContact = false;
+    alertMode;
+    attackMode = false;
 
     constructor(world, character) {
         super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
         this.world = world;
         this.character = character;
         this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_ALERT);
+        this.loadImages(this.IMAGES_ATTACK);
+        this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.animate();
     }
 
 
     animate() {
-        setInterval(() => {
+        this.walkingLeftAndRightInterval = setInterval(() => {
             this.walkToLeft();
             this.walkToRight();
             this.x += this.speed;
-        }, 50);
-        setInterval(() => {
+        }, 100);
+
+        this.walkingAnimationInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
             console.log(this.x);
-        }, 170);
+        }, 190);
+    }
+
+
+    activateAlertMode() {
+        console.log("Endboss ist aktiviert");
+        this.alertMode = false;
+        clearInterval(this.walkingLeftAndRightInterval);
+        setInterval(() => {
+            this.playAnimation(this.IMAGES_ALERT);
+        }, 200);
     }
 
 
     walkToRight() {
-        if (this.x <= 4500) {
+        if (this.x <= 4800) {
             this.speed = 5;
             this.otherDirection = true;
         }
@@ -81,7 +96,7 @@ class Endboss extends MoveableObject {
 
 
     walkToLeft() {
-        if (this.x >= 5200) {
+        if (this.x >= 5000) {
             this.speed = -5;
             this.otherDirection = false;
         }
