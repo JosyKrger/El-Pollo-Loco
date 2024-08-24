@@ -22,17 +22,6 @@ class MoveableObject extends DrawableObejct {
     }
 
 
-    playAnimationOnce(images) {
-        setInterval( ()=> {
-            if (this.currentImage < images.length) {
-                let path = images[this.currentImage];
-                this.img = this.imageCache[path];
-                this.currentImage++;
-            }
-        }, 100);
-    }
-
-
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {

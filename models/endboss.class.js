@@ -5,6 +5,7 @@ class Endboss extends MoveableObject {
     height = 400;
     width = 400;
     speed = 5;
+    energy = 100;
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',
@@ -25,13 +26,21 @@ class Endboss extends MoveableObject {
 
     IMAGES_ATTACK = [
         'img/4_enemie_boss_chicken/3_attack/G13.png',
+        'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/3_attack/G14.png',
+        'img/4_enemie_boss_chicken/1_walk/G2.png',
         'img/4_enemie_boss_chicken/3_attack/G15.png',
+        'img/4_enemie_boss_chicken/1_walk/G3.png',
         'img/4_enemie_boss_chicken/3_attack/G16.png',
+        'img/4_enemie_boss_chicken/1_walk/G4.png',
         'img/4_enemie_boss_chicken/3_attack/G17.png',
+        'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/3_attack/G18.png',
+        'img/4_enemie_boss_chicken/1_walk/G2.png',
         'img/4_enemie_boss_chicken/3_attack/G19.png',
-        'img/4_enemie_boss_chicken/3_attack/G20.png'
+        'img/4_enemie_boss_chicken/1_walk/G3.png',
+        'img/4_enemie_boss_chicken/3_attack/G20.png',
+        'img/4_enemie_boss_chicken/1_walk/G4.png'
     ];
 
     IMAGES_HURT = [
@@ -47,43 +56,90 @@ class Endboss extends MoveableObject {
     ];
 
     currentImage = 0;
-    alertMode;
-    attackMode = false;
+    world;
+    characterReachesBorder = false;
+    isHurt = false;
+    isDead = false;
+    walkingAnimationInterval = null;
+    walkingLeftAndRightInterval = null;
+    alertAnimationInterval;
 
-    constructor(world, character) {
+    constructor(world) {
         super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
-        this.world = world;
-        this.character = character;
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
+        this.world = world;
         this.animate();
     }
 
 
     animate() {
-        this.walkingLeftAndRightInterval = setInterval(() => {
-            this.walkToLeft();
-            this.walkToRight();
-            this.x += this.speed;
-        }, 100);
-
-        this.walkingAnimationInterval = setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING);
-            console.log(this.x);
-        }, 190);
+        let i = 0
+        setInterval(() => {
+            if (this.energy <= 0) {
+                if (i < 3) {
+                    this.deathAnimation();
+                }
+                i++;
+            } else if (this.isHurt) {
+                this.hurtAnimation();
+                this.speed += this.speed - 3;
+            } else if (this.characterReachesBorder) {
+                this.attackAnimation();
+            } else {
+                this.waitingForCharacter();
+            }
+        }, 220);
     }
 
 
-    activateAlertMode() {
-        console.log("Endboss ist aktiviert");
-        this.alertMode = false;
-        clearInterval(this.walkingLeftAndRightInterval);
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_ALERT);
-        }, 200);
+    waitingForCharacter() {
+        this.walkToLeft();
+        this.walkToRight();
+        this.playAnimation(this.IMAGES_WALKING);
+        this.x += this.speed;
+    }
+
+
+    attackAnimation() {
+        setTimeout(() => {
+            this.walkToLeft();
+            this.x += this.speed;
+            this.playAnimation(this.IMAGES_ATTACK);
+        }, 100);
+    }
+
+
+    followCharacter() {
+        this.playAnimation(this.IMAGES_WALKING);
+        if (this.world.character.x < this.x) {
+            this.x -= this.speed;
+            this.otherDirection = false;
+        } else if (this.world.character.x > this.x) {
+            this.x += this.speed;
+            this.otherDirection = true;
+        }
+    }
+
+
+    hurtAnimation() {
+        this.playAnimation(this.IMAGES_HURT);
+    }
+
+
+    deathAnimation() {
+        this.playAnimation(this.IMAGES_DEAD);
+        setTimeout(() => {
+            this.world.clearAllIntervals();
+        }, 450);
+    }
+
+
+    characterPosition() {
+        return true;
     }
 
 

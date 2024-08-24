@@ -2,15 +2,12 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
-function init() {
-    canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
-}
-
-
 function startGame() {
     closeStartScreen = document.getElementById('startScreen').classList.add('d_none');
-    startTheGame = document.getElementById('canvas').classList.remove('d_none');
+    startTheGame = document.getElementById('canvas').style.display = 'flex';
+    initLevel();
+    canvas = document.getElementById('canvas');
+    world = new World(canvas, keyboard);
 }
 
 

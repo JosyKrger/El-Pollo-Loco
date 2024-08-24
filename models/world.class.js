@@ -5,7 +5,6 @@ class World {
     bottlesStatusbar = new BottleStatusbar();
     endbossStatusbar = new EndbossStatusbar();
     throwBottle = new ThrowableObject();
-    endboss = new Endboss();
     throwableObjects = [];
     level = level1;
     canvas;
@@ -26,6 +25,9 @@ class World {
 
     setWorld() {
         this.character.world = this;
+        this.level.endboss.forEach(boss => {
+            boss.world = this;
+        });
     }
 
 
@@ -37,6 +39,7 @@ class World {
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.endboss);
 
         this.ctx.translate(-this.camera_x, 0);
 
@@ -94,40 +97,45 @@ class World {
 
 
     checkCollisions() {
-        if (this.character.x >= 4500) {
-            console.log("character: ", this.character.x);
-            // Hier kannst du weitere Aktionen ausführen, die du benötigst, z.B. den Endboss aktivieren
-            this.endboss.activateAlertMode(); 
-        }
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
-                enemy.die();
-                this.character.jump();
-                return false;
-            } else if (this.character.isColliding(enemy)) {
+        this.level.endboss.forEach((boss) => {
+            if (this.character.x >= 4200) {
+                boss.characterReachesBorder = true;
+            }
+
+        });
+        this.level.endboss.forEach((boss) => {
+            this.throwableObjects.forEach((bottle, index) => {
+                if (bottle.isColliding(boss)) {
+                    boss.energy -= 20;
+                    this.throwableObjects.splice(index, 1);
+                    boss.isHurt = true;
+                    setTimeout(() => {
+                        boss.isHurt = false;
+                    }, 400);
+                    this.updateStatusBar();
+                }
+            })
+        });
+
+        this.level.endboss.forEach((boss) => {
+            if (this.character.isColliding(boss)) {
                 this.character.hit();
                 this.healthStatusbar.setHealthPercentage(this.character.energy);
             }
 
-            this.throwableObjects.forEach((bottle) => {
-                this.level.enemies.forEach((enemy) => {
-                    if (bottle.isColliding(enemy)) {
-                        if (enemy instanceof Endboss) {
-                            this.endbossStatusbar.setEndbossPercentage(this.endbossStatusbar.endboss_percentage - 20);
-                            if (this.endbossStatusbar.endboss_percentage <= 0) {
-                                console.log("Endboss ist tot");
-                                this.checkEndbossDeath();
-                            }
-                        } else {
-                            // Für andere Feinde wie Chicken oder Chick
-                            enemy.die(); // Starte die Sterbeanimation und entferne den Feind
-                        }
-                        // Entferne die Flasche nach der Kollision
-                        this.throwableObjects = this.throwableObjects.filter(obj => obj !== bottle);
-                    }
-                });
-            });
+        });
 
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
+                enemy.die();
+                this.character.jumpAndActivateInvincibility();  // Springen und Unverwundbarkeit aktivieren
+                return false;
+            } else if (this.character.isColliding(enemy)) {
+                if (!this.character.isInvincible) {  // Schaden nur zufügen, wenn der Charakter nicht unverwundbar ist
+                    this.character.hit();
+                    this.healthStatusbar.setHealthPercentage(this.character.energy);
+                }
+            }
             return true;
         });
 
@@ -149,15 +157,8 @@ class World {
     }
 
 
-    checkEndbossDeath() {
-        let endbossChicken = this.level.enemies.find(enemy => enemy instanceof Endboss);
-
-        if (this.endbossStatusbar.endboss_percentage < 0) {
-            console.log("Energie der Statusbar ist 0 oder kleiner als 0");
-            setInterval(() => {
-                endbossChicken.playAnimation(endbossChicken.IMAGES_DEAD);
-            }, 2000);
-        }
+    updateStatusBar() {
+        this.endbossStatusbar.setEndbossPercentage(this.endbossStatusbar.endboss_percentage - 20);
     }
 
 
@@ -184,5 +185,10 @@ class World {
 
     reduceBottleStatusBar() {
         this.bottlesStatusbar.setBottlePercentage(this.bottlesStatusbar.bottle_percentage - 20);
+    }
+
+
+    clearAllIntervals() {
+        for (let i = 1; i < 9999; i++) window.clearInterval(i);
     }
 }

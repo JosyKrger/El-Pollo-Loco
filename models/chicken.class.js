@@ -29,6 +29,16 @@ class Chicken extends MoveableObject {
             this.animationInterval = setInterval(() => {
                 this.playAnimation(this.IMAGES_WALKING);
             }, 150);
+            this.jumpInterval = setInterval(() => {
+                this.jump();
+            }, 1000 + Math.random() * 1000);
+        }
+    }
+
+    
+    jump() {
+        if (this.y == 360) {
+            this.speedY = this.y + 20 + Math.random() * 10; // Hüpfen mit einer zufälligen Geschwindigkeit
         }
     }
 

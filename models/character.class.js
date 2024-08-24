@@ -1,6 +1,6 @@
 class Character extends MoveableObject {
 
-    x = 3000; //130;
+    x = 130;
     y = 200;
     height = 230;
     width = 130;
@@ -40,6 +40,7 @@ class Character extends MoveableObject {
     ];
     currentImage = 0;
     world;
+    isInvincible = false;
     walking_sound = new Audio('audio/running.mp3');
 
 
@@ -56,30 +57,46 @@ class Character extends MoveableObject {
 
 
     animate() {
+        // Bewegung des Charakters
         setInterval(() => {
             this.walkToRight();
             this.walkToLeft();
             this.jump();
             this.world.camera_x = -this.x + 115;
         }, 1000 / 60);
-
+    
         setInterval(() => {
-            if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            if (this.isDead() || this.isHurt() || this.isAboveGround()) {
+                return;
+            }
+            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
-        }, 50);
+        }, 100); 
+    
         setInterval(() => {
+            if (this.isDead() || this.isHurt()) {
+                return; 
+            }
             if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             }
-        }, 100);
+        }, 100); 
+    
+        setInterval(() => {
+            if (this.isDead()) {
+                return; 
+            }
+            if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            }
+        }, 150);
+    
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
             }
-        }, 80);
+        }, 80); 
     }
 
 
@@ -106,5 +123,19 @@ class Character extends MoveableObject {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.speedY = 30;
         }
+    }
+
+
+    activateInvincibility() {
+        this.isInvincible = true;
+        setTimeout(() => {
+            this.isInvincible = false;
+        }, 1000);
+    }
+
+    
+    jumpAndActivateInvincibility() {
+        this.jump(); 
+        this.activateInvincibility();  
     }
 } 
