@@ -19,9 +19,12 @@ canvas {
 }
 
 h1 {
-    font-size: 45px;
+    font-size: 50px;
+    font-weight: bold;
     letter-spacing: 4px;
     margin-bottom: 0;
+    text-align: center;
+    color: black;
 }
 
 button {
@@ -77,9 +80,115 @@ button:hover {
     height: 480px;
 }
 
-.dialog {
-    z-index: 1;
+.dialog_bg {
     width: 720px;
     height: 480px;
-    background-color: black;
+    background-image: url('img/5_background/desert-background4.png');
+    position: absolute;
+    margin-top: 110px;
+    color: #FEB13B;
+    padding: 10px;
+}
+
+h2 {
+    color: black;
+    text-align: center;
+    margin-top: -30px;
+    margin-left: 57px;
+}
+
+.control-buttons-computer {
+    display: flex;
+    flex-direction: column;
+    color: black;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.computer {
+    display: flex;
+    justify-content: space-around;
+    margin-top: -20px;
+}
+
+.dialog-content img {
+    height: 40px;
+}
+
+.dialog-content img:hover {
+    cursor: pointer;
+}
+
+.control-left-and-right {
+    text-align: center;
+}
+
+.control-left-and-right img {
+    height: 100px;
+}
+
+.left-and-right-description {
+    display: flex;
+    margin-top: -40px;
+    gap: 40px;
+}
+
+.control-jump img {
+    height: 80px;
+    margin-top: 20px;
+}
+
+.jump-description {
+    text-align: center;
+    margin-top: -45px;
+}
+
+.control-throw img {
+    height: 50px;
+    margin-top: 37px;
+    margin-right: 0px;
+}
+
+.throw-description {
+    text-align: center;
+    margin-top: -30px;
+}
+
+.control-buttons-mobile {
+    display: flex;
+    flex-direction: column;
+    color: black;
+    font-size: 18px;
+    margin-top: 40px;
+    font-weight: 600;
+}
+
+.mobile_phone_control {
+    margin-top: 100px;
+}
+
+.mobile-icon-left-right {
+    margin-left: -10px;
+}
+
+.mobile-icon-left-right img {
+    height: 50px;
+    margin-right: 20px;
+}
+
+.mobile-control-jump img {
+    height: 50px;
+}
+
+.mobile-jump-description {
+    margin-top: -40px;
+    margin-left: 5px;
+}
+
+.mobile-control-throw {
+    margin-top: 5px;
+}
+
+.mobile-control-throw img {
+    margin-left: 5px;
 }

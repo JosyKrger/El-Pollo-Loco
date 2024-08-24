@@ -84,6 +84,7 @@ class Endboss extends MoveableObject {
                     this.deathAnimation();
                 }
                 i++;
+                gameWon();
             } else if (this.isHurt) {
                 this.hurtAnimation();
                 this.speed += this.speed - 3;

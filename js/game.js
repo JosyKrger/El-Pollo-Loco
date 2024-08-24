@@ -11,6 +11,36 @@ function startGame() {
 }
 
 
+function gameWon() {
+    console.log("Spiel gewonnen");
+}
+
+
+function gameLost() {
+    console.log("Spiel verloren");
+}
+
+
+function restartGame() {
+    console.log("Spiel neustarten");
+}
+
+
+function backToStartscreen() {
+    document.getElementById('dialog-control').classList.add('d_none');
+}
+
+
+function showControl() {
+    document.getElementById('dialog-control').classList.remove('d_none');
+}
+
+
+function showSettingOptions() {
+    console.log("Setting Optionen");
+}
+
+
 window.addEventListener("keydown", (event) => {
     if (event.keyCode == 39) {
         keyboard.RIGHT = true;
