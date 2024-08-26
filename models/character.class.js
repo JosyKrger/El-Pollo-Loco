@@ -42,6 +42,7 @@ class Character extends MoveableObject {
     world;
     isInvincible = false;
     walking_sound = new Audio('audio/running.mp3');
+    jumping_sound = new Audio('audio/jump.mp3');
 
 
     constructor() {
@@ -64,7 +65,7 @@ class Character extends MoveableObject {
             this.jump();
             this.world.camera_x = -this.x + 115;
         }, 1000 / 60);
-    
+
         setInterval(() => {
             if (this.isDead() || this.isHurt() || this.isAboveGround()) {
                 return;
@@ -72,31 +73,31 @@ class Character extends MoveableObject {
             if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
-        }, 100); 
-    
+        }, 100);
+
         setInterval(() => {
             if (this.isDead() || this.isHurt()) {
-                return; 
+                return;
             }
             if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             }
-        }, 100); 
-    
+        }, 100);
+
         setInterval(() => {
             if (this.isDead()) {
-                return; 
+                return;
             }
             if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             }
         }, 150);
-    
+
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
             }
-        }, 80); 
+        }, 80);
     }
 
 
@@ -105,7 +106,9 @@ class Character extends MoveableObject {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.x += this.speed;
             this.otherDirection = false;
-            this.walking_sound.play();
+            if (!this.isAboveGround()) {
+                this.walking_sound.play();
+            }
         }
     }
 
@@ -114,7 +117,9 @@ class Character extends MoveableObject {
         if (this.world.keyboard.LEFT && this.x > 0) {
             this.x -= this.speed;
             this.otherDirection = true;
-            this.walking_sound.play();
+            if (!this.isAboveGround()) {
+                this.walking_sound.play();
+            }
         }
     }
 
@@ -122,6 +127,7 @@ class Character extends MoveableObject {
     jump() {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.speedY = 30;
+            this.jumping_sound.play();
         }
     }
 
@@ -133,9 +139,9 @@ class Character extends MoveableObject {
         }, 1000);
     }
 
-    
+
     jumpAndActivateInvincibility() {
-        this.jump(); 
-        this.activateInvincibility();  
+        this.jump();
+        this.activateInvincibility();
     }
 } 

@@ -12,6 +12,13 @@ body {
 
 canvas {
     background-color: black;
+    display: block;
+}
+
+#game-container {
+    position: relative;
+    width: 720px;
+    height: 480px;
 }
 
 .d_none {
@@ -191,4 +198,97 @@ h2 {
 
 .mobile-control-throw img {
     margin-left: 5px;
+}
+
+.music_and_sound_settings {
+    color: black;
+}
+
+.music_and_sound_settings p:hover {
+    cursor: pointer;
+}
+
+.turn_music_off_on {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.turn_music_off_on img {
+    height: 75px;
+    margin-right: 25px;
+}
+
+.turn_music_off_on p {
+    margin-left: 10px;
+}
+
+.music_sound_button p {
+    border: 1px solid black;
+    padding: 4px;
+    border-radius: 25px;
+}
+
+.music_on {
+    border: 1px solid black;
+    padding: 4px;
+    border-radius: 25px;
+}
+
+.music_off_button {
+    margin-top: 3px;
+    margin-right: 3px;
+}
+
+.bg-color {
+    background-color: #FEB13B;
+}
+
+.turn_sound_off_on {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    margin-left: 10px;
+    gap: 20px;
+}
+
+.turn_sound_off_on p {
+    margin-left: 10px;
+}
+
+.turn_sound_off_on img {
+    height: 50px;
+    margin-left: 0px;
+}
+
+.music_settings {
+    display: flex;
+    align-items: center;
+}
+
+.sound_settings {
+    display: flex;
+    padding-left: 20px;
+    align-items: center;
+}
+
+.game_buttons {
+    margin-right: 300px;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.game_buttons img {
+    margin-top: -5px;
+    margin-right: 10px;
+}
+
+.game_buttons img:hover {
+    cursor: pointer;
+}
+
+.margin_top {
+    margin-top: 4px;
 }

@@ -11,6 +11,8 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+    collect_bottle_sound = new Audio('audio/bottle.mp3');
+    throw_bottle_sound = new Audio('audio/throw.mp3');
 
 
     constructor(canvas, keyboard) {
@@ -150,6 +152,7 @@ class World {
         this.level.bottles = this.level.bottles.filter((bottle) => {
             if (this.character.isColliding(bottle)) {
                 this.bottlesStatusbar.setBottlePercentage(this.bottlesStatusbar.bottle_percentage + 20);
+                this.collect_bottle_sound.play();
                 return false;
             }
             return true;
@@ -177,6 +180,7 @@ class World {
         if (this.keyboard.D) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            this.throw_bottle_sound.play();
             this.reduceBottleStatusBar();
         }
         // }

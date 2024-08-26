@@ -49,7 +49,8 @@
 
     <div id="dialog-control" class="dialog_bg d_none">
         <div class="dialog-content">
-            <img class="back_to_startscreen" onclick="backToStartscreen()" src="./img/keyboard/backtostartscreen-icon.png" alt="">
+            <img class="back_to_startscreen" onclick="backToStartscreen()"
+                src="./img/keyboard/backtostartscreen-icon.png" alt="">
             <div class="computer_control">
                 <h2>Computer control</h2>
                 <div class="control-buttons-computer">
@@ -108,10 +109,29 @@
         </div>
     </div>
 
-    <div id="dialog-settings" class="dialog_bg d_none" onclick="closeDialog()">
+    <div id="dialog-settings" class="dialog_bg d_none">
         <div class="dialog-content">
-            <h1>Dialog</h1>
-            <p id="dialog_message">Informationen</p>
+            <img class="back_to_startscreen" onclick="backToStartscreen()"
+                src="./img/keyboard/backtostartscreen-icon.png" alt="">
+            <h2>Settings</h2>
+            <div class="music_and_sound_settings">
+                <div class="turn_music_off_on">
+                    <img src="./img/keyboard/music-icon.png" alt="">
+                    <div class="music_settings music_sound_button">
+                        <span>Music</span>
+                        <p id="music_off" onclick="turnMusicOff()">off</p>
+                        <p id="music_on" class="bg-color" onclick="turnMusicOn()">on</p>
+                    </div>
+                </div>
+                <div class="turn_sound_off_on">
+                    <img src="./img/keyboard/sound-icon.png" alt="">
+                    <div class="sound_settings music_sound_button">
+                        <span>Sound</span>
+                        <p id="sound_off" onclick="turnSoundOff()">off</p>
+                        <p id="sound_on" class="bg-color" onclick="turnSoundOn()">on</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -122,10 +142,23 @@
         </div>
     </div>
 
-
-    <canvas id="canvas" width="720px" height="480px" class="d_none">
-
-    </canvas>
+    <div id="game-container" class="d_none" style="position: relative; width: 720px; height: 480px;">
+        <canvas id="canvas" width="720" height="480"></canvas>
+        <div class="game_buttons" id="game-buttons" style="position: absolute; top: 10px; right: 10px;">
+            <div id="music_on_off">
+                <div id="music-button" class="music_button">
+                    <img onclick="turnMusicOff(); changeMusicIconOff()" src="./img/keyboard/music-icon.png" alt=""
+                        style="width: 40px;">
+                </div>
+            </div>
+            <div id="sound_on_off">
+                <div id="sound-button" class="sound_button">
+                    <img onclick="turnSoundOff(); changeSoundIconOff()" src="./img/keyboard/sound-icon.png" alt=""
+                        style="width: 28px;">
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 
