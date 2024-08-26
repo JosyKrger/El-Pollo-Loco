@@ -77,6 +77,7 @@ function turnSoundOn() {
 
 function changeMusicIconOff() {
     document.getElementById('sound-button').classList.add('margin_top');
+    document.getElementById('restart_button').classList.add('margin_top');
     document.getElementById('music_on_off').innerHTML = `
         <div id ="music_off_button" class="music_off_button" >
         <img onclick="turnMusicOn(); changeMusicIconOn()" src="./img/keyboard/no-music-icon.png" alt="" style="width: 33.5px;">
@@ -87,6 +88,7 @@ function changeMusicIconOff() {
 
 function changeMusicIconOn() {
     document.getElementById('sound-button').classList.remove('margin_top');
+    document.getElementById('restart_button').classList.remove('margin_top');
     document.getElementById('music_on_off').innerHTML = `
         <div id ="music-button" class="music_button" >
         <img onclick="turnMusicOff(); changeMusicIconOff()" src="./img/keyboard/music-icon.png" alt="" style="width: 40px;" >
@@ -112,6 +114,26 @@ function changeSoundIconOn() {
         <img onclick="turnSoundOff(); changeSoundIconOff()" src="./img/keyboard/sound-icon.png" alt="" style="width: 28px;">
         </div>
     `;
+}
+
+
+function runToLeftMobile(isPressed) {
+    return keyboard.LEFT = isPressed;
+}
+
+
+function runToRightMobile(isPressed) {
+    return keyboard.RIGHT = isPressed;
+}
+
+
+function throwBottleMobile(isPressed) {
+    return keyboard.D = isPressed;
+}
+
+
+function jumpMobile(isPressed) {
+    return keyboard.SPACE = isPressed;
 }
 
 

@@ -135,7 +135,14 @@
         </div>
     </div>
 
-    <div id="dialog-endscreen" class="dialog_bg d_none" onclick="closeDialog()">
+    <div id="dialog-endscreen_won" class="dialog_bg d_none" onclick="closeDialog()">
+        <div class="dialog-content">
+            <h1>Dialog</h1>
+            <p id="dialog_message">Informationen</p>
+        </div>
+    </div>
+
+    <div id="dialog-endscreen_won" class="dialog_bg d_none" onclick="closeDialog()">
         <div class="dialog-content">
             <h1>Dialog</h1>
             <p id="dialog_message">Informationen</p>
@@ -148,7 +155,7 @@
             <div id="music_on_off">
                 <div id="music-button" class="music_button">
                     <img onclick="turnMusicOff(); changeMusicIconOff()" src="./img/keyboard/music-icon.png" alt=""
-                        style="width: 40px;">
+                        style="width: 37px;">
                 </div>
             </div>
             <div id="sound_on_off">
@@ -156,6 +163,22 @@
                     <img onclick="turnSoundOff(); changeSoundIconOff()" src="./img/keyboard/sound-icon.png" alt=""
                         style="width: 28px;">
                 </div>
+            </div>
+            <div id="restart_game">
+                <div id="restart_button" class="restart_button">
+                    <img onclick="startGame()" src="./img/keyboard/restart-icon.png" alt=""
+                        style="width: 33px;">
+                </div>
+            </div>
+        </div>
+        <div class="mobile_buttons" style="position: absolute; top: 10px;">
+            <div class="mobile_buttons_running">
+                <img ontouchstart="runToLeftMobile(true)" ontouchend="runToLeftMobile(false)" src="./img/keyboard/mobilearrowleft-icon.png" alt="">
+                <img ontouchstart="runToRightMobile(true)" ontouchend="runToRightMobile(false)" class="run_right_button" src="./img/keyboard/mobilearrowright-icon.png" alt="">
+            </div>
+            <div class="mobile_buttons_jump_throw">
+                <img ontouchstart="throwBottleMobile(true)" ontouchend="throwBottleMobile(false)" class="mobile_bottle_button" src="./img/keyboard/mobilebottlethrow-icon.png" alt="" style="height: 45px;">
+                <img ontouchstart="jumpMobile(true)" ontouchend="jumpMobile(false)" src="./img/keyboard//mobilearrowjump-icon.png" alt="">
             </div>
         </div>
     </div>

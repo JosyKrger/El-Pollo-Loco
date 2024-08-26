@@ -292,3 +292,30 @@ h2 {
 .margin_top {
     margin-top: 4px;
 }
+
+.mobile_buttons {
+    margin-top: 410px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.mobile_buttons_running img {
+    height: 60px;
+}
+
+.mobile_buttons_jump_throw {
+    margin-left: 420px;
+}
+
+.mobile_buttons_jump_throw img {
+    height: 60px;
+}
+
+.run_right_button {
+    margin-left: 30px;
+}
+
+.mobile_bottle_button {
+    margin-bottom: 8px;
+    margin-right: 30px;
+}
