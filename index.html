@@ -40,10 +40,8 @@
 
     <div class="start_screen" id="startScreen">
         <div class="header">
-            <button id="controlButton" class="btn" onclick="showControl()">Control</button>
             <button id="startButton" class="btn" onclick="startGame()">Start</button>
-            <button id="settingButton" class="btn" onclick="showSettingOptions()">Settings<img
-                    src="./img/9_intro_outro_screens/start/settings-icon.png" alt="Settings"></button>
+            <button id="controlButton" class="btn" onclick="showControl()">Control</button>
         </div>
     </div>
 
@@ -109,76 +107,66 @@
         </div>
     </div>
 
-    <div id="dialog-settings" class="dialog_bg d_none">
-        <div class="dialog-content">
-            <img class="back_to_startscreen" onclick="backToStartscreen()"
-                src="./img/keyboard/backtostartscreen-icon.png" alt="">
-            <h2>Settings</h2>
-            <div class="music_and_sound_settings">
-                <div class="turn_music_off_on">
-                    <img src="./img/keyboard/music-icon.png" alt="">
-                    <div class="music_settings music_sound_button">
-                        <span>Music</span>
-                        <p id="music_off" onclick="turnMusicOff()">off</p>
-                        <p id="music_on" class="bg-color" onclick="turnMusicOn()">on</p>
-                    </div>
-                </div>
-                <div class="turn_sound_off_on">
-                    <img src="./img/keyboard/sound-icon.png" alt="">
-                    <div class="sound_settings music_sound_button">
-                        <span>Sound</span>
-                        <p id="sound_off" onclick="turnSoundOff()">off</p>
-                        <p id="sound_on" class="bg-color" onclick="turnSoundOn()">on</p>
-                    </div>
-                </div>
+    <div id="dialog-endscreen-won" class="won_bg d_none">
+        <div class="endscreen_won">
+            <div class="endscreen_button">
+                <img onclick="backToStartscreen()" src="./img/keyboard/backtostartscreen-icon.png" alt="">
+                <img onclick="restartGame()" src="./img/keyboard/restart-icon.png" alt="">
+            </div>
+            <div class="endscreen_img">
+                <img src="./img/9_intro_outro_screens/win/won_2.png" alt="">
             </div>
         </div>
     </div>
 
-    <div id="dialog-endscreen_won" class="dialog_bg d_none" onclick="closeDialog()">
-        <div class="dialog-content">
-            <h1>Dialog</h1>
-            <p id="dialog_message">Informationen</p>
+    <!-- <div id="dialog-endscreen-lost" class="lost_bg d_none">
+        <div class="endscreen_lost">
+            <div class="endscreen_button">
+                <img onclick="backToStartscreen()" src="./img/keyboard/backtostartscreen-icon.png" alt="">
+                <img onclick="restartGame()" src="./img/keyboard/restart-icon.png" alt="">
+            </div>
+            <div class="endscreen_img_lost">
+                <img src="img/9_intro_outro_screens/game_over/oh no you lost!.png" alt="">
+            </div>
         </div>
-    </div>
+    </div> -->
 
-    <div id="dialog-endscreen_won" class="dialog_bg d_none" onclick="closeDialog()">
-        <div class="dialog-content">
-            <h1>Dialog</h1>
-            <p id="dialog_message">Informationen</p>
-        </div>
-    </div>
-
-    <div id="game-container" class="d_none" style="position: relative; width: 720px; height: 480px;">
+    <div class="turn_mobile"></div>
+    
+    <div id="game-container" class="d_none">
         <canvas id="canvas" width="720" height="480"></canvas>
-        <div class="game_buttons" id="game-buttons" style="position: absolute; top: 10px; right: 10px;">
+        <div class="game_buttons" id="game-buttons" style="position: absolute; top: 10px;">
             <div id="music_on_off">
                 <div id="music-button" class="music_button">
                     <img onclick="turnMusicOff(); changeMusicIconOff()" src="./img/keyboard/music-icon.png" alt=""
-                        style="width: 37px;">
+                        style="width: 41px;">
                 </div>
             </div>
             <div id="sound_on_off">
                 <div id="sound-button" class="sound_button">
                     <img onclick="turnSoundOff(); changeSoundIconOff()" src="./img/keyboard/sound-icon.png" alt=""
-                        style="width: 28px;">
+                        style="width: 29px;">
                 </div>
             </div>
             <div id="restart_game">
                 <div id="restart_button" class="restart_button">
-                    <img onclick="startGame()" src="./img/keyboard/restart-icon.png" alt=""
-                        style="width: 33px;">
+                    <img onclick="startGame()" src="./img/keyboard/restart-icon.png" alt="" style="width: 33px;">
                 </div>
             </div>
         </div>
-        <div class="mobile_buttons" style="position: absolute; top: 10px;">
+        <div class="mobile_buttons" id="mobile-buttons">
             <div class="mobile_buttons_running">
-                <img ontouchstart="runToLeftMobile(true)" ontouchend="runToLeftMobile(false)" src="./img/keyboard/mobilearrowleft-icon.png" alt="">
-                <img ontouchstart="runToRightMobile(true)" ontouchend="runToRightMobile(false)" class="run_right_button" src="./img/keyboard/mobilearrowright-icon.png" alt="">
+                <img ontouchstart="runToLeftMobile(true)" ontouchend="runToLeftMobile(false)"
+                    src="./img/keyboard/mobilearrowleft-icon.png" alt="">
+                <img ontouchstart="runToRightMobile(true)" ontouchend="runToRightMobile(false)" class="run_right_button"
+                    src="./img/keyboard/mobilearrowright-icon.png" alt="">
             </div>
             <div class="mobile_buttons_jump_throw">
-                <img ontouchstart="throwBottleMobile(true)" ontouchend="throwBottleMobile(false)" class="mobile_bottle_button" src="./img/keyboard/mobilebottlethrow-icon.png" alt="" style="height: 45px;">
-                <img ontouchstart="jumpMobile(true)" ontouchend="jumpMobile(false)" src="./img/keyboard//mobilearrowjump-icon.png" alt="">
+                <img ontouchstart="throwBottleMobile(true)" ontouchend="throwBottleMobile(false)"
+                    class="mobile_bottle_button" src="./img/keyboard/mobilebottlethrow-icon.png" alt=""
+                    style="height: 45px;">
+                <img ontouchstart="jumpMobile(true)" ontouchend="jumpMobile(false)"
+                    src="./img/keyboard//mobilearrowjump-icon.png" alt="">
             </div>
         </div>
     </div>

@@ -2,10 +2,11 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let background_music = new Audio('audio/backgroundmusic.mp3');
+let won_sound = new Audio('audio/win.mp3');
+let lost_sound = new Audio('audio/lost.mp3');
 
 function startGame() {
     closeStartScreen = document.getElementById('startScreen').classList.add('d_none');
-    startTheGame = document.getElementById('canvas').style.display = 'flex';
     document.getElementById('game-container').classList.remove('d_none');
     initLevel();
     canvas = document.getElementById('canvas');
@@ -16,25 +17,39 @@ function startGame() {
 
 
 function gameWon() {
-    console.log("Spiel gewonnen");
     background_music.pause();
+    document.getElementById('dialog-endscreen-won').classList.remove('d_none');
+    document.getElementById('mobile-buttons').style.position = 'fixed';
+    document.getElementById('mobile-buttons').classList.add('d_none');
+    document.getElementById('game-buttons').style.display = 'none';
+    won_sound.play();
 }
 
 
 function gameLost() {
-    console.log("Spiel verloren");
     background_music.pause();
+    document.getElementById('dialog-endscreen-lost').classList.remove('d_none');
+    document.getElementById('game-buttons').classList.add('d_none');
+    document.getElementById('mobile-buttons').classList.add('d_none');
+    lost_sound.play();
 }
 
 
 function restartGame() {
     console.log("Spiel neustarten");
+    document.getElementById('dialog-endscreen-won').classList.add('d_none');
+    document.getElementById('dialog-endscreen-lost').classList.add('d_none');
+    startGame();
 }
 
 
 function backToStartscreen() {
     document.getElementById('dialog-control').classList.add('d_none');
-    document.getElementById('dialog-settings').classList.add('d_none');
+    document.getElementById('dialog-endscreen-won').classList.add('d_none');
+    document.getElementById('game-container').classList.add('d_none');
+    document.getElementById('dialog-endscreen-lost').classList.add('d_none');
+    document.getElementById('mobile-buttons').classList.add('d_none');
+    document.getElementById('startScreen').classList.remove('d_none');
 }
 
 
@@ -50,28 +65,24 @@ function showSettingOptions() {
 
 
 function turnMusicOff() {
-    document.getElementById('music_off').classList.add('bg-color');
-    document.getElementById('music_on').classList.remove('bg-color');
     background_music.pause();
 }
 
 
 function turnMusicOn() {
-    document.getElementById('music_off').classList.remove('bg-color');
-    document.getElementById('music_on').classList.add('bg-color');
     background_music.play();
 }
 
 
 function turnSoundOff() {
-    document.getElementById('sound_off').classList.add('bg-color');
-    document.getElementById('sound_on').classList.remove('bg-color');
+    world.character.play_sounds = false;
+    world.play_sounds = false;
 }
 
 
 function turnSoundOn() {
-    document.getElementById('sound_off').classList.remove('bg-color');
-    document.getElementById('sound_on').classList.add('bg-color');
+    world.character.play_sounds = true;
+    world.play_sounds = true;
 }
 
 

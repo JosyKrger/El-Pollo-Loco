@@ -43,6 +43,7 @@ class Character extends MoveableObject {
     isInvincible = false;
     walking_sound = new Audio('audio/running.mp3');
     jumping_sound = new Audio('audio/jump.mp3');
+    play_sounds = true;
 
 
     constructor() {
@@ -54,6 +55,12 @@ class Character extends MoveableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.applyGravity();
         this.animate();
+    }
+
+
+    stopCharacterSound() {
+        this.walking_sound.pause();
+        this.jumping_sound.pause();
     }
 
 
@@ -96,6 +103,12 @@ class Character extends MoveableObject {
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
+                setTimeout(() => {
+                    this.world.clearAllIntervals();
+                }, 450);
+                gameLost();
+                this.walking_sound.pause();
+                this.jumping_sound.pause();
             }
         }, 80);
     }
@@ -107,7 +120,9 @@ class Character extends MoveableObject {
             this.x += this.speed;
             this.otherDirection = false;
             if (!this.isAboveGround()) {
-                this.walking_sound.play();
+                if (this.play_sounds) {
+                this.walking_sound.play();   
+                }
             }
         }
     }
@@ -118,7 +133,9 @@ class Character extends MoveableObject {
             this.x -= this.speed;
             this.otherDirection = true;
             if (!this.isAboveGround()) {
-                this.walking_sound.play();
+                if (this.play_sounds) {
+                    this.walking_sound.play();
+                }
             }
         }
     }
@@ -127,7 +144,10 @@ class Character extends MoveableObject {
     jump() {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.speedY = 30;
-            this.jumping_sound.play();
+            if (this.play_sounds) {
+                this.jumping_sound.pause();
+                this.jumping_sound.play();
+            }
         }
     }
 

@@ -13,6 +13,12 @@ class World {
     camera_x = 0;
     collect_bottle_sound = new Audio('audio/bottle.mp3');
     throw_bottle_sound = new Audio('audio/throw.mp3');
+    defeat_chicken_sound = new Audio('audio/chicken.mp3');
+    broke_bottle_sound = new Audio('audio/glass.mp3');
+    collect_coins_sound = new Audio('audio/collectcoins.mp3');
+    get_damage_sound = new Audio('audio/getdamage.mp3');
+    hit_endboss_sound = new Audio('audio/endboss.mp3');
+    play_sounds = true;
 
 
     constructor(canvas, keyboard) {
@@ -105,16 +111,39 @@ class World {
             }
 
         });
+
+        this.level.enemies.forEach((enemy) => {
+            this.throwableObjects.forEach((bottle, index) => {
+                if (bottle.isColliding(enemy)) {
+                    this.throwableObjects.splice(index, 1);
+                    enemy.die();
+                    if (this.play_sounds) {
+                        this.broke_bottle_sound.pause();
+                        this.broke_bottle_sound.play();
+                    }
+                    return false;
+                }
+            })
+        });
+
         this.level.endboss.forEach((boss) => {
             this.throwableObjects.forEach((bottle, index) => {
                 if (bottle.isColliding(boss)) {
                     boss.energy -= 20;
                     this.throwableObjects.splice(index, 1);
                     boss.isHurt = true;
+                    if (this.play_sounds) {
+                        this.hit_endboss_sound.pause();
+                        this.hit_endboss_sound.play();
+                    }
                     setTimeout(() => {
                         boss.isHurt = false;
                     }, 400);
                     this.updateStatusBar();
+                    if (this.play_sounds) {
+                        this.broke_bottle_sound.pause();
+                        this.broke_bottle_sound.play();
+                    }
                 }
             })
         });
@@ -123,6 +152,10 @@ class World {
             if (this.character.isColliding(boss)) {
                 this.character.hit();
                 this.healthStatusbar.setHealthPercentage(this.character.energy);
+                if (this.play_sounds) {
+                    this.get_damage_sound.pause();
+                    this.get_damage_sound.play();
+                }
             }
 
         });
@@ -130,11 +163,19 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
                 enemy.die();
-                this.character.jumpAndActivateInvincibility();  // Springen und Unverwundbarkeit aktivieren
+                if (this.play_sounds) {
+                    this.defeat_chicken_sound.pause();
+                    this.defeat_chicken_sound.play();
+                }
+                this.character.jumpAndActivateInvincibility();
                 return false;
             } else if (this.character.isColliding(enemy)) {
-                if (!this.character.isInvincible) {  // Schaden nur zufügen, wenn der Charakter nicht unverwundbar ist
+                if (!this.character.isInvincible) {
                     this.character.hit();
+                    if (this.play_sounds) {
+                        this.get_damage_sound.pause();
+                        this.get_damage_sound.play();
+                    }
                     this.healthStatusbar.setHealthPercentage(this.character.energy);
                 }
             }
@@ -144,6 +185,10 @@ class World {
         this.level.coins = this.level.coins.filter((coin) => {
             if (this.character.isColliding(coin)) {
                 this.coinsStatusbar.setCoinPercentage(this.coinsStatusbar.coin_percentage + 20);
+                if (this.play_sounds) {
+                    this.collect_coins_sound.pause();
+                    this.collect_coins_sound.play();
+                }
                 return false;
             }
             return true;
@@ -152,7 +197,10 @@ class World {
         this.level.bottles = this.level.bottles.filter((bottle) => {
             if (this.character.isColliding(bottle)) {
                 this.bottlesStatusbar.setBottlePercentage(this.bottlesStatusbar.bottle_percentage + 20);
-                this.collect_bottle_sound.play();
+                if (this.play_sounds) {
+                    this.collect_bottle_sound.pause();
+                    this.collect_bottle_sound.play();
+                }
                 return false;
             }
             return true;
@@ -180,6 +228,7 @@ class World {
         if (this.keyboard.D) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            this.throw_bottle_sound.pause();
             this.throw_bottle_sound.play();
             this.reduceBottleStatusBar();
         }
