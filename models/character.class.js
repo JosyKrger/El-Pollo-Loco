@@ -70,6 +70,12 @@ class Character extends MoveableObject {
     walking_sound = new Audio('audio/running.mp3');
     jumping_sound = new Audio('audio/jump.mp3');
     play_sounds = true;
+    offset = {
+        top: 100,
+        left: 20,
+        right: 20,
+        bottom: 0
+    };
 
 
     constructor() {
@@ -107,6 +113,8 @@ class Character extends MoveableObject {
             }
             if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING);
+                this.timeUntilSleepAnimation = false;
+                console.log("timeUntilSleepAnimation", this.timeUntilSleepAnimation);
             }
         }, 100);
 
@@ -116,6 +124,8 @@ class Character extends MoveableObject {
             }
             if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
+                this.timeUntilSleepAnimation = false;
+                console.log("timeUntilSleepAnimation", this.timeUntilSleepAnimation);
             }
         }, 100);
 
@@ -142,8 +152,18 @@ class Character extends MoveableObject {
         setInterval(() => {
             if (this.isDoingNothing() && !this.timeUntilSleepAnimation) {
                 this.playAnimation(this.IMAGES_IDLE);
+                this.sleepTimer()
             }
         }, 200);
+    }
+
+
+    sleepTimer() {
+        this.timeUntilSleepAnimation = false;
+        setTimeout(() => {
+            this.timeUntilSleepAnimation = true;
+        }, 10000);
+        this.playAnimation(this.IMAGES_SLEEPING);
     }
   
 

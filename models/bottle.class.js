@@ -9,6 +9,13 @@ class Bottle extends MoveableObject {
         'img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
     ];
 
+    offset = {
+        top: 10,
+        left: 15,
+        right: 15,
+        bottom: 10
+    };
+
     constructor(x) {
         super().loadImage(this.IMAGES_BOTTLE[0]);
         this.loadImages(this.IMAGES_BOTTLE);

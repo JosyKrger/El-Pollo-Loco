@@ -63,6 +63,12 @@ class Endboss extends MoveableObject {
     walkingAnimationInterval = null;
     walkingLeftAndRightInterval = null;
     alertAnimationInterval;
+    offset = {
+        top: 60,
+        left: 50,
+        right: 20,
+        bottom: 0
+    };
 
     constructor(world) {
         super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
@@ -87,21 +93,21 @@ class Endboss extends MoveableObject {
                 gameWon();
             } else if (this.isHurt) {
                 this.hurtAnimation();
-                this.speed += this.speed - 1;
+                this.speed += this.speed - 2;
             } else if (this.characterReachesBorder) {
                 this.attackAnimation();
             } else {
                 this.waitingForCharacter();
             }
-        }, 220);
+        }, 180);
     }
 
 
     waitingForCharacter() {
-        this.walkToLeft();
-        this.walkToRight();
-        this.playAnimation(this.IMAGES_WALKING);
-        this.x += this.speed;
+            this.walkToLeft();
+            this.walkToRight();
+            this.playAnimation(this.IMAGES_WALKING);
+            this.x += this.speed;
     }
 
 
