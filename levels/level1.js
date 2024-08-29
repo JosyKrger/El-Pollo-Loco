@@ -78,11 +78,16 @@ function initLevel() {
             new Cloud()
         ],
         [
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle()
+            new Bottle(500),
+            new Bottle(1000),
+            new Bottle(1600),
+            new Bottle(2200),
+            new Bottle(2600),
+            new Bottle(3000),
+            new Bottle(3300),
+            new Bottle(3800),
+            new Bottle(4100),
+            new Bottle(4600)
         ],
         [
             new Coin(),

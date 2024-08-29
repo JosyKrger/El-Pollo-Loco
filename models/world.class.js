@@ -11,6 +11,7 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+    coolDown = 0;
     collect_bottle_sound = new Audio('audio/bottle.mp3');
     throw_bottle_sound = new Audio('audio/throw.mp3');
     defeat_chicken_sound = new Audio('audio/chicken.mp3');
@@ -184,7 +185,7 @@ class World {
 
         this.level.coins = this.level.coins.filter((coin) => {
             if (this.character.isColliding(coin)) {
-                this.coinsStatusbar.setCoinPercentage(this.coinsStatusbar.coin_percentage + 20);
+                this.coinsStatusbar.setCoinPercentage(this.coinsStatusbar.coin_percentage + 10);
                 if (this.play_sounds) {
                     this.collect_coins_sound.pause();
                     this.collect_coins_sound.play();
@@ -196,7 +197,7 @@ class World {
 
         this.level.bottles = this.level.bottles.filter((bottle) => {
             if (this.character.isColliding(bottle)) {
-                this.bottlesStatusbar.setBottlePercentage(this.bottlesStatusbar.bottle_percentage + 20);
+                this.bottlesStatusbar.setBottlePercentage(this.bottlesStatusbar.bottle_percentage + 10);
                 if (this.play_sounds) {
                     this.collect_bottle_sound.pause();
                     this.collect_bottle_sound.play();
@@ -219,13 +220,15 @@ class World {
         }, 50);
         setInterval(() => {
             this.checkThrowObjects();
-        }, 150);
+            this.coolDownBottle();
+        }, 300);
     }
 
 
     checkThrowObjects() {
         // if (this.bottles.bottle_percentage > 0) {
-        if (this.keyboard.D) {
+        if (this.keyboard.F && this.coolDown <= 0) {
+            this.coolDown = 40;
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
             this.throw_bottle_sound.pause();
@@ -236,8 +239,15 @@ class World {
     }
 
 
+    coolDownBottle() {
+        if (this.coolDown > 0) {
+            this.coolDown -= 1000/60;
+        }
+    }
+
+
     reduceBottleStatusBar() {
-        this.bottlesStatusbar.setBottlePercentage(this.bottlesStatusbar.bottle_percentage - 20);
+        this.bottlesStatusbar.setBottlePercentage(this.bottlesStatusbar.bottle_percentage - 10);
     }
 
 

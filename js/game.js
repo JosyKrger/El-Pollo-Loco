@@ -19,7 +19,6 @@ function startGame() {
 function gameWon() {
     background_music.pause();
     document.getElementById('dialog-endscreen-won').classList.remove('d_none');
-    document.getElementById('mobile-buttons').style.position = 'fixed';
     document.getElementById('mobile-buttons').classList.add('d_none');
     document.getElementById('game-buttons').style.display = 'none';
     won_sound.play();
@@ -157,20 +156,12 @@ window.addEventListener("keydown", (event) => {
         keyboard.LEFT = true;
     }
 
-    if (event.keyCode == 38) {
-        keyboard.UP = true;
-    }
-
-    if (event.keyCode == 40) {
-        keyboard.DOWN = true;
-    }
-
     if (event.keyCode == 32) {
         keyboard.SPACE = true;
     }
 
-    if (event.keyCode == 68) {
-        keyboard.D = true;
+    if (event.keyCode == 70) {
+        keyboard.F = true;
     }
 });
 
@@ -184,19 +175,11 @@ window.addEventListener("keyup", (event) => {
         keyboard.LEFT = false;
     }
 
-    if (event.keyCode == 38) {
-        keyboard.UP = false;
-    }
-
-    if (event.keyCode == 40) {
-        keyboard.DOWN = false;
-    }
-
     if (event.keyCode == 32) {
         keyboard.SPACE = false;
     }
 
-    if (event.keyCode == 68) {
-        keyboard.D = false;
+    if (event.keyCode == 70) {
+        keyboard.F = false;
     }
 });

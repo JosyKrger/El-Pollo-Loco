@@ -35,13 +35,13 @@ class BottleStatusbar extends DrawableObejct {
     resolveIamgeIndex() {
         if (this.bottle_percentage == 100) {
             return 5;
-        } else if (this.bottle_percentage == 80) {
+        } else if (this.bottle_percentage >= 80) {
             return 4;
-        } else if (this.bottle_percentage == 60) {
+        } else if (this.bottle_percentage >= 60) {
             return 3;
-        } else if (this.bottle_percentage == 40) {
+        } else if (this.bottle_percentage >= 40) {
             return 2;
-        } else if (this.bottle_percentage == 20) {
+        } else if (this.bottle_percentage >= 20) {
             return 1;
         } else {
             return 0;
