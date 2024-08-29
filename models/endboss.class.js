@@ -93,7 +93,7 @@ class Endboss extends MoveableObject {
                 gameWon();
             } else if (this.isHurt) {
                 this.hurtAnimation();
-                this.speed += this.speed - 2;
+                this.speed = this.speed - 3;
             } else if (this.characterReachesBorder) {
                 this.attackAnimation();
             } else {
@@ -113,6 +113,7 @@ class Endboss extends MoveableObject {
 
     attackAnimation() {
         setTimeout(() => {
+            this.otherDirection = false;
             this.walkToLeft();
             this.x += this.speed;
             this.playAnimation(this.IMAGES_ATTACK);

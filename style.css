@@ -41,6 +41,13 @@ button {
     display: block;
 }
 
+.impressum {
+    height: 85%;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+
 .start_screen {
     width: 720px;
     height: 480px;
@@ -48,6 +55,15 @@ button {
     background-size: 100% 100%;
     position: relative;
 }
+
+.dialog_impressum img {
+    height: 40px;
+}
+
+.dialog_impressum img:hover {
+    cursor: pointer;
+}
+ 
 
 .header {
     display: flex;
@@ -60,6 +76,17 @@ button {
     margin-top: 3px;
     height: 30px;
     width: 30px;
+}
+
+.start_screen p {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 5px;
+    
+}
+
+.start_screen p:hover {
+    cursor: pointer;
 }
 
 .btn {
@@ -90,6 +117,19 @@ button:hover {
     height: 480px;
 }
 
+.impressum_content h2 {
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.impressum_content {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .dialog_bg {
     width: 720px;
     height: 480px;
@@ -110,6 +150,10 @@ button:hover {
     margin-top: 115px;
 }
 
+.won_bg img:hover {
+    cursor: pointer;
+} 
+
 .lost_bg {
     width: 720px;
     height: 480px;
@@ -118,6 +162,10 @@ button:hover {
     z-index: 100;
     margin-top: 115px;
 }
+
+.lost_bg img:hover {
+    cursor: pointer;
+} 
 
 .endscreen_button {
     display: flex;
@@ -136,6 +184,7 @@ button:hover {
     height: 480px;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .endscreen_img img {

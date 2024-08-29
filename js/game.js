@@ -6,7 +6,7 @@ let won_sound = new Audio('audio/win.mp3');
 let lost_sound = new Audio('audio/lost.mp3');
 
 function startGame() {
-    closeStartScreen = document.getElementById('startScreen').classList.add('d_none');
+    document.getElementById('startScreen').classList.add('d_none');
     document.getElementById('game-container').classList.remove('d_none');
     initLevel();
     canvas = document.getElementById('canvas');
@@ -49,6 +49,7 @@ function backToStartscreen() {
     document.getElementById('dialog-endscreen-lost').classList.add('d_none');
     document.getElementById('mobile-buttons').classList.add('d_none');
     document.getElementById('startScreen').classList.remove('d_none');
+    document.getElementById('dialog-impressum').classList.add('d_none');
 }
 
 
@@ -58,8 +59,12 @@ function showControl() {
 
 
 function showSettingOptions() {
-    console.log("Setting Optionen");
     document.getElementById('dialog-settings').classList.remove('d_none');
+}
+
+
+function showImpressum() {
+    document.getElementById('dialog-impressum').classList.remove('d_none');
 }
 
 

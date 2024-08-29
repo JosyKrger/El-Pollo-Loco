@@ -14,11 +14,11 @@ class Coin extends MoveableObject {
         bottom: 15
     };
 
-    constructor() {
-        super().loadImage('img/8_coin/coin_1.png');
-        this.x = 300 + Math.random() * 3000;
-        this.y = 100 + Math.random() * 150;
+    constructor(x, y) {
+        super().loadImage(this.IMAGES_BOUNCING[0]);
         this.loadImages(this.IMAGES_BOUNCING);
+        this.x = x;
+        this.y = y;
         this.animate();
     }
 

@@ -9,6 +9,15 @@ function initLevel() {
             new Chicken(),
             new Chicken(),
             new Chicken(),
+            new Chicken(),
+            new Chicken(),
+            new Chicken(),
+            new Chicken(),
+            new Chicken(),
+            new Chick(),
+            new Chick(),
+            new Chick(),
+            new Chick(),
             new Chick(),
             new Chick(),
             new Chick(),
@@ -90,11 +99,20 @@ function initLevel() {
             new Bottle(4600)
         ],
         [
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin()
+            new Coin(500, 250),
+            new Coin(650, 220),
+            new Coin(800, 270),
+            new Coin(1100, 250),
+            new Coin(1200, 200),
+            new Coin(1300, 150),
+            new Coin(1400, 150),
+            new Coin(1500, 200),
+            new Coin(1600, 250),
+            new Coin(1900, 240),
+            new Coin(2100, 210),
+            new Coin(2400, 260),
+            new Coin(2900, 200),
+            new Coin(3500, 230),
         ]
     );
 }

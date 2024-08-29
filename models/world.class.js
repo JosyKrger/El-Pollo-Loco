@@ -119,7 +119,6 @@ class World {
                     this.throwableObjects.splice(index, 1);
                     enemy.die();
                     if (this.play_sounds) {
-                        this.broke_bottle_sound.pause();
                         this.broke_bottle_sound.play();
                     }
                     return false;
@@ -134,7 +133,6 @@ class World {
                     this.throwableObjects.splice(index, 1);
                     boss.isHurt = true;
                     if (this.play_sounds) {
-                        this.hit_endboss_sound.pause();
                         this.hit_endboss_sound.play();
                     }
                     setTimeout(() => {
@@ -142,7 +140,6 @@ class World {
                     }, 400);
                     this.updateStatusBar();
                     if (this.play_sounds) {
-                        this.broke_bottle_sound.pause();
                         this.broke_bottle_sound.play();
                     }
                 }
@@ -154,7 +151,6 @@ class World {
                 this.character.hit();
                 this.healthStatusbar.setHealthPercentage(this.character.energy);
                 if (this.play_sounds) {
-                    this.get_damage_sound.pause();
                     this.get_damage_sound.play();
                 }
             }
@@ -165,7 +161,6 @@ class World {
             if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
                 enemy.die();
                 if (this.play_sounds) {
-                    this.defeat_chicken_sound.pause();
                     this.defeat_chicken_sound.play();
                 }
                 this.character.jumpAndActivateInvincibility();
@@ -174,7 +169,6 @@ class World {
                 if (!this.character.isInvincible) {
                     this.character.hit();
                     if (this.play_sounds) {
-                        this.get_damage_sound.pause();
                         this.get_damage_sound.play();
                     }
                     this.healthStatusbar.setHealthPercentage(this.character.energy);
@@ -187,7 +181,6 @@ class World {
             if (this.character.isColliding(coin)) {
                 this.coinsStatusbar.setCoinPercentage(this.coinsStatusbar.coin_percentage + 10);
                 if (this.play_sounds) {
-                    this.collect_coins_sound.pause();
                     this.collect_coins_sound.play();
                 }
                 return false;
@@ -199,7 +192,6 @@ class World {
             if (this.character.isColliding(bottle)) {
                 this.bottlesStatusbar.setBottlePercentage(this.bottlesStatusbar.bottle_percentage + 10);
                 if (this.play_sounds) {
-                    this.collect_bottle_sound.pause();
                     this.collect_bottle_sound.play();
                 }
                 return false;
@@ -226,22 +218,23 @@ class World {
 
 
     checkThrowObjects() {
-        // if (this.bottles.bottle_percentage > 0) {
-        if (this.keyboard.F && this.coolDown <= 0) {
-            this.coolDown = 40;
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-            this.throwableObjects.push(bottle);
-            this.throw_bottle_sound.pause();
-            this.throw_bottle_sound.play();
-            this.reduceBottleStatusBar();
+        if (this.bottles.bottle_percentage > 0) {
+            if (this.keyboard.F && this.coolDown <= 0) {
+                this.coolDown = 20;
+                let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+                this.throwableObjects.push(bottle);
+                if (this.play_sounds) {
+                    this.throw_bottle_sound.play();
+                }
+                this.reduceBottleStatusBar();
+            }
         }
-        // }
     }
 
 
     coolDownBottle() {
         if (this.coolDown > 0) {
-            this.coolDown -= 1000/60;
+            this.coolDown -= 1000 / 60;
         }
     }
 

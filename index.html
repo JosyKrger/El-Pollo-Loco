@@ -43,6 +43,21 @@
             <button id="startButton" class="btn" onclick="startGame()">Start</button>
             <button id="controlButton" class="btn" onclick="showControl()">Control</button>
         </div>
+        <div id="impressum" class="impressum">
+            <p onclick="showImpressum()">Impressum</p>
+        </div>
+    </div>
+
+    <div id="dialog-impressum" class="dialog_bg dialog_impressum d_none">
+        <img class="back_to_startscreen" onclick="backToStartscreen()"
+                src="./img/keyboard/backtostartscreen-icon.png" alt="">
+        <div class="impressum_content">
+            <h2>Impressum</h2>
+            <span>Josy Krüger</span>
+            <span>Alpenblick 9</span>
+            <span>6330 Cham</span>
+            <span>+41 76 483 27 05</span>
+        </div>
     </div>
 
     <div id="dialog-control" class="dialog_bg d_none">

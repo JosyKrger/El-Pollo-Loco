@@ -152,9 +152,8 @@ class Character extends MoveableObject {
         setInterval(() => {
             if (this.isDoingNothing() && !this.timeUntilSleepAnimation) {
                 this.playAnimation(this.IMAGES_IDLE);
-                this.sleepTimer()
             }
-        }, 200);
+        }, 230);
     }
 
 
