@@ -20,6 +20,8 @@ class World {
     get_damage_sound = new Audio('audio/getdamage.mp3');
     hit_endboss_sound = new Audio('audio/endboss.mp3');
     play_sounds = true;
+    collisionsIntervall;
+    checkThrowedBottleInterval;
 
 
     /**
@@ -211,7 +213,7 @@ class World {
         });
     }
 
-    
+
     /**
     * Handles collisions between the character and the endboss.
     */
@@ -300,10 +302,11 @@ class World {
     * Starts the game loops for checking collisions and handling thrown objects.
     */
     run() {
-        setInterval(() => {
+        this.clearIntervalsWhileRun();
+        this.collisionsIntervall = setInterval(() => {
             this.checkCollisions();
         }, 50);
-        setInterval(() => {
+        this.checkThrowedBottleInterval = setInterval(() => {
             this.checkThrowObjects();
             this.coolDownBottle();
         }, 300);
@@ -351,5 +354,29 @@ class World {
     */
     clearAllIntervals() {
         for (let i = 1; i < 9999; i++) window.clearInterval(i);
+    }
+
+
+    /**
+    * Clears the intervals related to collision detection and checking for thrown bottles.
+    * This method is used to stop the periodic checks during the game loop, ensuring that 
+    * the intervals do not continue running when they are no longer needed.
+    */
+    clearIntervalsWhileRun() {
+        clearInterval(this.collisionsIntervall);
+        clearInterval(this.checkThrowedBottleInterval);
+    }
+
+
+    /**
+    * Clears all intervals and resets the world state, removing all enemies, objects, and clearing active intervals.
+    */
+    clearWorld() {
+        this.clearIntervalsWhileRun();
+        this.level.enemies = [];
+        this.level.endboss = [];
+        this.level.bottles = [];
+        this.level.coins = [];
+        this.throwableObjects = [];
     }
 }

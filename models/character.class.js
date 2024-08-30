@@ -160,14 +160,14 @@ class Character extends MoveableObject {
     characterIsJumping() {
         setInterval(() => {
             if (this.isDead() || this.isHurt()) {
-                return; 
+                return;
             }
             if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             }
         }, 100);
     }
-  
+
 
     /**
      * Handles the hurt animation of the character.
@@ -285,9 +285,9 @@ class Character extends MoveableObject {
 
 
     /**
-     * Activates invincibility mode for the character for a short duration (1 second).
-     * The character cannot be hurt while invincible.
-     */
+    * Activates invincibility for the character, making them immune to damage for a short period.
+    * The invincibility lasts for 1000 milliseconds (1 second).
+    */
     activateInvincibility() {
         this.isInvincible = true;
         setTimeout(() => {
@@ -297,8 +297,9 @@ class Character extends MoveableObject {
 
 
     /**
-     * Makes the character jump and activates invincibility mode simultaneously.
-     */
+    * Makes the character jump and simultaneously activates invincibility.
+    * This method is typically used after the character defeats an enemy.
+    */
     jumpAndActivateInvincibility() {
         this.jump();
         this.activateInvincibility();

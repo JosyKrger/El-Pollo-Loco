@@ -13,6 +13,9 @@ let lost_sound = new Audio('audio/lost.mp3');
 function startGame() {
     document.getElementById('startScreen').classList.add('d_none');
     document.getElementById('game-container').classList.remove('d_none');
+    document.getElementById('game-buttons').classList.remove('d_none')
+    changeMusicIconOn();
+    changeSoundIconOn();
     initLevel();
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
@@ -29,7 +32,7 @@ function gameWon() {
     background_music.pause();
     document.getElementById('dialog-endscreen-won').classList.remove('d_none');
     document.getElementById('mobile-buttons').classList.add('d_none');
-    document.getElementById('game-buttons').style.display = 'none';
+    document.getElementById('game-buttons').classList.add('d_none');
     won_sound.play();
 }
 
@@ -51,9 +54,9 @@ function gameLost() {
  * Restarts the game by hiding the end screens and calling the startGame function.
  */
 function restartGame() {
-    console.log("Spiel neustarten");
     document.getElementById('dialog-endscreen-won').classList.add('d_none');
     document.getElementById('dialog-endscreen-lost').classList.add('d_none');
+    world.clearWorld();
     startGame();
 }
 

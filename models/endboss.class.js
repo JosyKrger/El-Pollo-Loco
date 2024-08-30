@@ -97,10 +97,10 @@ class Endboss extends MoveableObject {
     * - Otherwise, it handles the waiting animation and movement.
     */
     animate() {
-        let i = 0
         setInterval(() => {
             if (this.energy <= 0) {
                 this.endbossIsDead();
+                gameWon();
             } else if (this.isHurt) {
                 this.hurtAnimation();
                 this.speed = this.speed - 3;
@@ -118,11 +118,11 @@ class Endboss extends MoveableObject {
     * Plays the death animation and triggers the game win event.
     */
     endbossIsDead() {
+        let i = 0
         if (i < 3) {
             this.deathAnimation();
         }
         i++;
-        gameWon();
     }
 
 
