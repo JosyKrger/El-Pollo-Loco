@@ -11,6 +11,14 @@ class ThrowableObject extends MoveableObject {
     speedY = 30;
     speedX = 20;
 
+
+    /**
+    * Creates a new throwable object with a specified position and initializes its properties.
+    * The object starts with a rotating image and begins to move with a specified speed.
+    * 
+    * @param {number} x - The initial x-coordinate of the object.
+    * @param {number} y - The initial y-coordinate of the object.
+    */
     constructor(x, y) {
         super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.IMAGES_ROTATE);
@@ -22,6 +30,10 @@ class ThrowableObject extends MoveableObject {
     }
 
 
+    /**
+    * Starts the object’s throw action, applying gravity and animating the object.
+    * The object moves horizontally across the screen and rotates while in flight.
+    */
     throw() {
         this.speedY = 30;
         this.applyGravity();

@@ -1,5 +1,10 @@
 let level1;
 
+
+/**
+ * Initializes the level by creating and setting up the game objects including enemies, endboss, 
+ * background objects, clouds, bottles, and coins.
+ */
 function initLevel() {
 
     level1 = new Level(

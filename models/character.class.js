@@ -62,7 +62,6 @@ class Character extends MoveableObject {
         'img/2_character_pepe/5_dead/D-56.png',
         'img/2_character_pepe/5_dead/D-57.png'
     ];
-    idleTime = 0;
     currentImage = 0;
     timeUntilSleepAnimation = false;
     world;
@@ -78,6 +77,12 @@ class Character extends MoveableObject {
     };
 
 
+    /**
+     * Creates an instance of Character.
+     * Initializes the character with images and animations, applies gravity, and starts the animations.
+     * 
+     * @constructor
+     */
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.world = null;
@@ -92,43 +97,84 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * Stops all character sounds, including walking and jumping sounds.
+     */
     stopCharacterSound() {
         this.walking_sound.pause();
         this.jumping_sound.pause();
     }
 
 
+    /**
+     * Starts the main animation loop for the character.
+     * The loop handles character movement, jumping, hurt, death, and idle animations.
+     */
     animate() {
-        // Bewegung des Charakters
+        this.cameraIsMoving();
+        this.characterIsRunning();
+        this.characterIsJumping();
+        this.characterIsHurt();
+        this.characterIsDead();
+        this.characterIsWaiting();
+    }
+
+
+    /**
+     * Handles the camera movement based on the character's position.
+     * Updates the camera position as the character moves.
+     * Runs at 60 frames per second.
+     */
+    cameraIsMoving() {
         setInterval(() => {
             this.walkToRight();
             this.walkToLeft();
             this.jump();
             this.world.camera_x = -this.x + 115;
         }, 1000 / 60);
+    }
 
+
+    /**
+     * Handles the running animation of the character.
+     * The character plays the walking animation when moving left or right, unless it is dead, hurt, or in the air.
+     * Runs at 10 frames per second.
+     */
+    characterIsRunning() {
         setInterval(() => {
             if (this.isDead() || this.isHurt() || this.isAboveGround()) {
                 return;
             }
             if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING);
-                this.timeUntilSleepAnimation = false;
-                console.log("timeUntilSleepAnimation", this.timeUntilSleepAnimation);
             }
         }, 100);
+    }
 
+
+    /**
+     * Handles the jumping animation of the character.
+     * The character plays the jumping animation when it is in the air, unless it is dead or hurt.
+     * Runs at 10 frames per second.
+     */
+    characterIsJumping() {
         setInterval(() => {
             if (this.isDead() || this.isHurt()) {
                 return; 
             }
             if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
-                this.timeUntilSleepAnimation = false;
-                console.log("timeUntilSleepAnimation", this.timeUntilSleepAnimation);
             }
         }, 100);
+    }
+  
 
+    /**
+     * Handles the hurt animation of the character.
+     * The character plays the hurt animation when it is hurt, unless it is dead.
+     * Runs at approximately 6.67 frames per second.
+     */
+    characterIsHurt() {
         setInterval(() => {
             if (this.isDead()) {
                 return;
@@ -137,7 +183,15 @@ class Character extends MoveableObject {
                 this.playAnimation(this.IMAGES_HURT);
             }
         }, 150);
+    }
 
+
+    /**
+     * Handles the death animation of the character.
+     * The character plays the death animation when it is dead and then triggers the game over sequence.
+     * Runs at 12.5 frames per second.
+     */
+    characterIsDead() {
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
@@ -149,6 +203,15 @@ class Character extends MoveableObject {
                 this.jumping_sound.pause();
             }
         }, 80);
+    }
+
+
+    /**
+     * Handles the idle animation of the character.
+     * The character plays the idle animation when it is doing nothing.
+     * Runs at approximately 4.35 frames per second.
+     */
+    characterIsWaiting() {
         setInterval(() => {
             if (this.isDoingNothing() && !this.timeUntilSleepAnimation) {
                 this.playAnimation(this.IMAGES_IDLE);
@@ -157,15 +220,11 @@ class Character extends MoveableObject {
     }
 
 
-    sleepTimer() {
-        this.timeUntilSleepAnimation = false;
-        setTimeout(() => {
-            this.timeUntilSleepAnimation = true;
-        }, 10000);
-        this.playAnimation(this.IMAGES_SLEEPING);
-    }
-  
-
+    /**
+     * Checks if the character is not performing any actions.
+     * 
+     * @returns {boolean} Returns true if the character is not moving or performing any actions, otherwise false.
+     */
     isDoingNothing() {
         if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.world.keyboard.F) {
             return true;
@@ -175,6 +234,10 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * Moves the character to the right if the right arrow key is pressed.
+     * Updates the character's position and plays the walking sound if the character is on the ground.
+     */
     walkToRight() {
         this.walking_sound.pause();
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -189,6 +252,10 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * Moves the character to the left if the left arrow key is pressed.
+     * Updates the character's position and plays the walking sound if the character is on the ground.
+     */
     walkToLeft() {
         if (this.world.keyboard.LEFT && this.x > 0) {
             this.x -= this.speed;
@@ -202,6 +269,10 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * Makes the character jump if the space bar is pressed and the character is on the ground.
+     * Plays the jumping sound when the character jumps.
+     */
     jump() {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.speedY = 30;
@@ -213,6 +284,10 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * Activates invincibility mode for the character for a short duration (1 second).
+     * The character cannot be hurt while invincible.
+     */
     activateInvincibility() {
         this.isInvincible = true;
         setTimeout(() => {
@@ -221,6 +296,9 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * Makes the character jump and activates invincibility mode simultaneously.
+     */
     jumpAndActivateInvincibility() {
         this.jump();
         this.activateInvincibility();

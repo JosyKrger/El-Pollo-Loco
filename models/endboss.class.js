@@ -70,6 +70,13 @@ class Endboss extends MoveableObject {
         bottom: 0
     };
 
+
+    /**
+    * Creates an instance of the Endboss class.
+    * Initializes the endboss with default settings and loads its images.
+    * 
+    * @param {World} world - The game world that the endboss belongs to.
+    */
     constructor(world) {
         super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -82,15 +89,18 @@ class Endboss extends MoveableObject {
     }
 
 
+    /**
+    * Handles the endboss's animations based on its current state.
+    * - When the endboss's energy is zero or less, it triggers the death animation and ends the game.
+    * - When the endboss is hurt, it plays the hurt animation and reduces speed.
+    * - When the character reaches the endboss's border, it triggers the attack animation.
+    * - Otherwise, it handles the waiting animation and movement.
+    */
     animate() {
         let i = 0
         setInterval(() => {
             if (this.energy <= 0) {
-                if (i < 3) {
-                    this.deathAnimation();
-                }
-                i++;
-                gameWon();
+                this.endbossIsDead();
             } else if (this.isHurt) {
                 this.hurtAnimation();
                 this.speed = this.speed - 3;
@@ -103,14 +113,34 @@ class Endboss extends MoveableObject {
     }
 
 
-    waitingForCharacter() {
-            this.walkToLeft();
-            this.walkToRight();
-            this.playAnimation(this.IMAGES_WALKING);
-            this.x += this.speed;
+    /**
+    * Handles the endboss's death sequence.
+    * Plays the death animation and triggers the game win event.
+    */
+    endbossIsDead() {
+        if (i < 3) {
+            this.deathAnimation();
+        }
+        i++;
+        gameWon();
     }
 
 
+    /**
+    * Handles the endboss's behavior when waiting for the character.
+    * Moves the endboss left and right while playing the walking animation.
+    */
+    waitingForCharacter() {
+        this.walkToLeft();
+        this.walkToRight();
+        this.playAnimation(this.IMAGES_WALKING);
+        this.x += this.speed;
+    }
+
+
+    /**
+    * Triggers the attack animation when the character reaches the endboss's border.
+    */
     attackAnimation() {
         setTimeout(() => {
             this.otherDirection = false;
@@ -121,6 +151,10 @@ class Endboss extends MoveableObject {
     }
 
 
+    /**
+    * Makes the endboss follow the character based on its position.
+    * Adjusts the endboss's position and direction based on the character's position.
+    */
     followCharacter() {
         this.playAnimation(this.IMAGES_WALKING);
         if (this.world.character.x < this.x) {
@@ -133,11 +167,17 @@ class Endboss extends MoveableObject {
     }
 
 
+    /**
+    * Plays the hurt animation for the endboss.
+    */
     hurtAnimation() {
         this.playAnimation(this.IMAGES_HURT);
     }
 
 
+    /**
+    * Plays the death animation for the endboss and clears all intervals after a delay.
+    */
     deathAnimation() {
         this.playAnimation(this.IMAGES_DEAD);
         setTimeout(() => {
@@ -146,11 +186,19 @@ class Endboss extends MoveableObject {
     }
 
 
+    /**
+    * Determines if the character is within a certain position relative to the endboss.
+    * 
+    * @returns {boolean} Always returns true.
+    */
     characterPosition() {
         return true;
     }
 
 
+    /**
+    * Moves the endboss to the right if within bounds.
+    */
     walkToRight() {
         if (this.x <= 4800) {
             this.speed = 5;
@@ -159,6 +207,9 @@ class Endboss extends MoveableObject {
     }
 
 
+    /**
+    * Moves the endboss to the left if within bounds.#
+    */
     walkToLeft() {
         if (this.x >= 5000) {
             this.speed = -5;

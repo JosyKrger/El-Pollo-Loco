@@ -16,6 +16,13 @@ class Bottle extends MoveableObject {
         bottom: 10
     };
 
+
+    /**
+     * Creates an instance of Bottle.
+     * 
+     * @constructor
+     * @param {number} x - The x-coordinate where the bottle will be placed on the canvas.
+     */
     constructor(x) {
         super().loadImage(this.IMAGES_BOTTLE[0]);
         this.loadImages(this.IMAGES_BOTTLE);
@@ -25,6 +32,10 @@ class Bottle extends MoveableObject {
     }
 
 
+    /**
+     * Animates the bottle by cycling through the images in the IMAGES_BOTTLE array.
+     * The image changes every 800 milliseconds.
+     */
     animate() {
         setInterval( () => {
             let i = this.currentImage % this.IMAGES_BOTTLE.length;

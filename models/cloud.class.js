@@ -5,6 +5,13 @@ class Cloud extends MoveableObject {
     width = 570;
     speed = 0.3;
 
+
+    /**
+     * Creates an instance of Cloud.
+     * Initializes the cloud with a random horizontal position and starts its movement to the left.
+     * 
+     * @constructor
+     */
     constructor() {
         super().loadImage('img/5_background/layers/4_clouds/1.png');
 
@@ -13,6 +20,9 @@ class Cloud extends MoveableObject {
     }
 
 
+    /**
+     * Starts the cloud's movement to the left.
+     */
     animate() {
         this.moveLeft();
     }

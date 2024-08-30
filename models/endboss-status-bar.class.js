@@ -13,6 +13,10 @@ class EndbossStatusbar extends DrawableObejct {
     ];
 
 
+    /**
+    * Creates an instance of the Endboss class.
+    * Initializes the endboss with default settings and loads its images.
+    */
     constructor() {
         super();
         this.loadImages(this.ENDBOSS_STATUS);
@@ -24,6 +28,11 @@ class EndbossStatusbar extends DrawableObejct {
     }
 
 
+    /**
+    * Sets the percentage of the endboss and updates its image accordingly.
+    * 
+    * @param {number} percentage - The new percentage value for the endboss.
+    */
     setEndbossPercentage(percentage) {
         this.endboss_percentage = percentage;
         let path = this.ENDBOSS_STATUS[this.resolveIamgeIndex()];
@@ -31,6 +40,11 @@ class EndbossStatusbar extends DrawableObejct {
     }
 
 
+    /**
+    * Resolves the image index based on the endboss's percentage.
+    * 
+    * @returns {number} The index of the image corresponding to the endboss's percentage.
+    */
     resolveIamgeIndex() {
         if (this.endboss_percentage == 100) {
             return 5;

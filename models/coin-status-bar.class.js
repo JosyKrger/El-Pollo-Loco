@@ -12,6 +12,12 @@ class CoinStatusbar extends DrawableObejct {
     ];
 
 
+    /**
+     * Creates an instance of CoinStatus.
+     * Initializes the coin status with default values and sets the initial display based on the coin percentage.
+     * 
+     * @constructor
+     */
     constructor() {
         super();
         this.loadImages(this.COIN_STATUS);
@@ -23,6 +29,11 @@ class CoinStatusbar extends DrawableObejct {
     }
 
 
+    /**
+     * Sets the coin collection percentage and updates the displayed image accordingly.
+     * 
+     * @param {number} percentage - The current percentage of coins collected.
+     */
     setCoinPercentage(percentage) {
         this.coin_percentage = percentage;
         let path = this.COIN_STATUS[this.resolveIamgeIndex()];
@@ -30,6 +41,11 @@ class CoinStatusbar extends DrawableObejct {
     }
 
 
+    /**
+     * Resolves the appropriate image index based on the current coin percentage.
+     * 
+     * @returns {number} The index corresponding to the current coin percentage.
+     */
     resolveIamgeIndex() {
         if (this.coin_percentage == 100) {
             return 5;

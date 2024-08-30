@@ -15,6 +15,13 @@ class Chicken extends MoveableObject {
     ];
     currentImage = 0;
 
+
+    /**
+     * Creates an instance of NormalChicken.
+     * Initializes the chicken with a random position and starts its walking animation.
+     * 
+     * @constructor
+     */
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.x = 370 + Math.random() * 5500;
@@ -23,19 +30,24 @@ class Chicken extends MoveableObject {
     }
 
 
+    /**
+     * Starts the walking animation of the chicken.
+     * The chicken moves to the left and plays the walking animation.
+     */
     animate() {
         if (!this.isDead) { 
             this.moveLeft();
             this.animationInterval = setInterval(() => {
                 this.playAnimation(this.IMAGES_WALKING);
             }, 150);
-            setInterval(() => {
-                this.jump();
-            }, 1000 + Math.random() * 1000);
         }
     }
 
     
+    /**
+     * Makes the chicken jump with a random speed.
+     * The chicken will only jump if it is on the ground (y position is 360).
+     */
     jump() {
         if (this.y == 360) {
             this.speedY = this.y + 20 + Math.random() * 10; // Hüpfen mit einer zufälligen Geschwindigkeit
@@ -43,6 +55,10 @@ class Chicken extends MoveableObject {
     }
 
 
+    /**
+     * Triggers the death of the chicken.
+     * Stops all animations, plays the death image, and removes the chicken from the game after a short delay.
+     */
     die() {
         this.isDead = true;
         clearInterval(this.animationInterval); 
@@ -54,6 +70,9 @@ class Chicken extends MoveableObject {
     }
 
 
+    /**
+     * Removes the chicken from the game's enemy list.
+     */
     remove() {
         world.level.enemies = world.level.enemies.filter(enemy => enemy !== this);
     }

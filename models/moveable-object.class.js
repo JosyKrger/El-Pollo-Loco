@@ -13,6 +13,10 @@ class MoveableObject extends DrawableObejct {
     };
 
 
+    /**
+    * Moves the object to the left by decreasing its `x` coordinate at a regular interval.
+    * The movement speed is controlled by the `speed` property.
+    */
     moveLeft() {
         this.moveInterval = setInterval(() => {
             this.x -= this.speed;
@@ -20,6 +24,12 @@ class MoveableObject extends DrawableObejct {
     }
 
 
+    /**
+    * Updates the current image to display the next frame in the animation sequence.
+    * The `images` parameter is an array of image paths to be used for animation.
+    * 
+    * @param {string[]} images - An array of image paths for animation.
+    */
     playAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
@@ -28,6 +38,10 @@ class MoveableObject extends DrawableObejct {
     }
 
 
+    /**
+    * Applies gravity to the object, causing it to fall unless it's above ground or already falling.
+    * The object's vertical speed is adjusted by `speedY`, and gravity is applied by decrementing `speedY`.
+    */
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -38,6 +52,12 @@ class MoveableObject extends DrawableObejct {
     }
 
 
+    /**
+    * Determines if the object is above the ground based on its `y` coordinate.
+    * Special handling is provided for objects of type `ThrowableObject`.
+    * 
+    * @returns {boolean} True if the object is above the ground, false otherwise.
+    */
     isAboveGround() {
         if (this instanceof ThrowableObject) {
             return true;
@@ -47,6 +67,12 @@ class MoveableObject extends DrawableObejct {
     }
 
 
+    /**
+    * Checks if this object is colliding with another object based on their bounding boxes.
+    * 
+    * @param {MoveableObject} mo - The object to check for collision with.
+    * @returns {boolean} True if the objects are colliding, false otherwise.
+    */
     isColliding(mo) {
         return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
             this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
@@ -55,6 +81,10 @@ class MoveableObject extends DrawableObejct {
     }
 
 
+    /**
+    * Reduces the object's energy by 5 units. If the energy falls below 0, it is set to 0.
+    * Updates the `lastHit` timestamp to the current time.
+    */
     hit() {
         this.energy -= 5;
         if (this.energy < 0) {
@@ -65,11 +95,21 @@ class MoveableObject extends DrawableObejct {
     }
 
 
+    /**
+    * Determines if the object is dead based on its energy level.
+    * 
+    * @returns {boolean} True if the object's energy is 0, false otherwise.
+    */
     isDead() {
         return this.energy == 0;
     }
 
 
+    /**
+    * Determines if the object is currently hurt based on the time since the last hit.
+    * 
+    * @returns {boolean} True if the object was hit within the last 0.5 seconds, false otherwise.
+    */
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;

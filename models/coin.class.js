@@ -14,6 +14,14 @@ class Coin extends MoveableObject {
         bottom: 15
     };
 
+
+    /**
+     * Creates an instance of Coins.
+     * Initializes the object with bouncing animations and sets its position.
+     * 
+     * @param {number} x - The x-coordinate of the bouncing object.
+     * @param {number} y - The y-coordinate of the bouncing object.
+     */
     constructor(x, y) {
         super().loadImage(this.IMAGES_BOUNCING[0]);
         this.loadImages(this.IMAGES_BOUNCING);
@@ -23,6 +31,10 @@ class Coin extends MoveableObject {
     }
 
 
+    /**
+     * Starts the bouncing animation by cycling through the images at a specified interval.
+     * Updates the displayed image based on the current animation frame.
+     */
     animate() {
         setInterval( () => {
             let i = this.currentImage % this.IMAGES_BOUNCING.length;
