@@ -166,7 +166,7 @@ class Character extends MoveableObject {
             if (this.isAboveGround()) {
                 if (i < 7) {
                     this.playAnimation(this.IMAGES_JUMPING);
-                i++;
+                    i++;
                 } else {
                     i = 0;
                 }
@@ -221,8 +221,26 @@ class Character extends MoveableObject {
         setInterval(() => {
             if (this.isDoingNothing() && !this.timeUntilSleepAnimation) {
                 this.playAnimation(this.IMAGES_IDLE);
+                setTimeout(() => {
+                    this.timeUntilSleepAnimation = true;
+                    this.characterIsSleeping();
+                }, 3000);
             }
         }, 230);
+    }
+
+
+    /**
+    * Handles the sleeping animation of the character.
+    * The character plays the sleeping animation when it is idle and has not moved for a certain period.
+    * This method should be called when the character is supposed to be in a sleeping state.
+    */
+    characterIsSleeping() {
+        if (this.isDoingNothing() && this.timeUntilSleepAnimation) {
+            this.playAnimation(this.IMAGES_SLEEPING);
+        } else {
+            this.timeUntilSleepAnimation = false;
+        }
     }
 
 
@@ -235,6 +253,7 @@ class Character extends MoveableObject {
         if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.world.keyboard.F) {
             return true;
         } else {
+            this.timeUntilSleepAnimation = false;
             return false;
         }
     }
@@ -291,7 +310,7 @@ class Character extends MoveableObject {
 
     /**
     * Activates invincibility for the character, making them immune to damage for a short period.
-    * The invincibility lasts for 1000 milliseconds (1 second).
+    * The invincibility lasts for 1 second.
     */
     activateInvincibility() {
         this.isInvincible = true;

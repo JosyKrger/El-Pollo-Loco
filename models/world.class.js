@@ -236,7 +236,6 @@ class World {
     collisionCharacterEnemy() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0) {
-                console.log(this.character.speedY);
                 enemy.die();
                 if (this.play_sounds) {
                     this.defeat_chicken_sound.play();
