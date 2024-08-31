@@ -25,22 +25,22 @@ class Endboss extends MoveableObject {
     ];
 
     IMAGES_ATTACK = [
+        'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/3_attack/G13.png',
-        'img/4_enemie_boss_chicken/1_walk/G1.png',
+        'img/4_enemie_boss_chicken/1_walk/G2.png',
         'img/4_enemie_boss_chicken/3_attack/G14.png',
-        'img/4_enemie_boss_chicken/1_walk/G2.png',
+        'img/4_enemie_boss_chicken/1_walk/G3.png',
         'img/4_enemie_boss_chicken/3_attack/G15.png',
-        'img/4_enemie_boss_chicken/1_walk/G3.png',
-        'img/4_enemie_boss_chicken/3_attack/G16.png',
         'img/4_enemie_boss_chicken/1_walk/G4.png',
-        'img/4_enemie_boss_chicken/3_attack/G17.png',
+        'img/4_enemie_boss_chicken/3_attack/G16.png',
         'img/4_enemie_boss_chicken/1_walk/G1.png',
-        'img/4_enemie_boss_chicken/3_attack/G18.png',
+        'img/4_enemie_boss_chicken/3_attack/G17.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',
-        'img/4_enemie_boss_chicken/3_attack/G19.png',
+        'img/4_enemie_boss_chicken/3_attack/G18.png',
         'img/4_enemie_boss_chicken/1_walk/G3.png',
-        'img/4_enemie_boss_chicken/3_attack/G20.png',
-        'img/4_enemie_boss_chicken/1_walk/G4.png'
+        'img/4_enemie_boss_chicken/3_attack/G19.png',
+        'img/4_enemie_boss_chicken/1_walk/G4.png',
+        'img/4_enemie_boss_chicken/3_attack/G20.png'
     ];
 
     IMAGES_HURT = [
@@ -55,6 +55,7 @@ class Endboss extends MoveableObject {
         'img/4_enemie_boss_chicken/5_dead/G26.png',
     ];
 
+    hurtToggle = true;
     currentImage = 0;
     world;
     characterReachesBorder = false;
@@ -102,14 +103,15 @@ class Endboss extends MoveableObject {
                 this.endbossIsDead();
                 gameWon();
             } else if (this.isHurt) {
+                this.increaseEndbossSpeed();
                 this.hurtAnimation();
-                this.speed = this.speed - 3;
+                //this.attackAnimation();
             } else if (this.characterReachesBorder) {
                 this.attackAnimation();
             } else {
                 this.waitingForCharacter();
             }
-        }, 180);
+        }, 300);
     }
 
 
@@ -142,11 +144,16 @@ class Endboss extends MoveableObject {
     * Triggers the attack animation when the character reaches the endboss's border.
     */
     attackAnimation() {
-        setTimeout(() => {
-            this.otherDirection = false;
-            this.walkToLeft();
-            this.x += this.speed;
+        let i = 0
+        if (i < 16) {
             this.playAnimation(this.IMAGES_ATTACK);
+        }
+        i++;
+        setTimeout(() => {
+        this.otherDirection = false;
+        this.walkToLeft();
+        this.x += this.speed;
+        this.playAnimation(this.IMAGES_WALKING);
         }, 100);
     }
 
@@ -171,7 +178,23 @@ class Endboss extends MoveableObject {
     * Plays the hurt animation for the endboss.
     */
     hurtAnimation() {
-        this.playAnimation(this.IMAGES_HURT);
+        let i = 0
+        if (i < 3) {
+            this.playAnimation(this.IMAGES_HURT);
+        }
+        i++;
+    }
+
+
+    /**
+    * Increase the speed of the endboss.
+    */
+    increaseEndbossSpeed() {
+        this.playAnimation(this.IMAGES_WALKING);
+        this.speed = this.speed - 75;
+        setTimeout(() => {
+            this.speed = 5;
+        }, 2600);
     }
 
 
@@ -208,7 +231,7 @@ class Endboss extends MoveableObject {
 
 
     /**
-    * Moves the endboss to the left if within bounds.#
+    * Moves the endboss to the left if within bounds.
     */
     walkToLeft() {
         if (this.x >= 5000) {

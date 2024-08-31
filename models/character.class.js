@@ -158,14 +158,20 @@ class Character extends MoveableObject {
      * Runs at 10 frames per second.
      */
     characterIsJumping() {
+        let i = 0
         setInterval(() => {
             if (this.isDead() || this.isHurt()) {
                 return;
             }
             if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
+                if (i < 7) {
+                    this.playAnimation(this.IMAGES_JUMPING);
+                i++;
+                } else {
+                    i = 0;
+                }
             }
-        }, 100);
+        }, 110);
     }
 
 
@@ -277,7 +283,6 @@ class Character extends MoveableObject {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.speedY = 30;
             if (this.play_sounds) {
-                this.jumping_sound.pause();
                 this.jumping_sound.play();
             }
         }

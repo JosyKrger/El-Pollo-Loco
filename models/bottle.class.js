@@ -11,8 +11,8 @@ class Bottle extends MoveableObject {
 
     offset = {
         top: 10,
-        left: 15,
-        right: 15,
+        left: 30,
+        right: 30,
         bottom: 10
     };
 

@@ -2,8 +2,11 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let background_music = new Audio('audio/backgroundmusic.mp3');
+background_music.volume = 0.5;
 let won_sound = new Audio('audio/win.mp3');
+won_sound.volume = 0.25;
 let lost_sound = new Audio('audio/lost.mp3');
+lost_sound.volume = 0.25;
 
 
 /**
@@ -193,6 +196,7 @@ function changeSoundIconOn() {
  * @returns {boolean} - The updated state of the left arrow key.
  */
 function runToLeftMobile(isPressed) {
+    event.preventDefault();
     return keyboard.LEFT = isPressed;
 }
 
@@ -203,6 +207,7 @@ function runToLeftMobile(isPressed) {
  * @returns {boolean} - The updated state of the right arrow key.
  */
 function runToRightMobile(isPressed) {
+    event.preventDefault();
     return keyboard.RIGHT = isPressed;
 }
 
@@ -213,6 +218,7 @@ function runToRightMobile(isPressed) {
  * @returns {boolean} - The updated state of the throw key.
  */
 function throwBottleMobile(isPressed) {
+    event.preventDefault();
     return keyboard.D = isPressed;
 }
 
@@ -223,6 +229,7 @@ function throwBottleMobile(isPressed) {
  * @returns {boolean} - The updated state of the jump key.
  */
 function jumpMobile(isPressed) {
+    event.preventDefault();
     return keyboard.SPACE = isPressed;
 }
 

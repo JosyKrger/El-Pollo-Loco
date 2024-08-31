@@ -235,7 +235,8 @@ class World {
     */
     collisionCharacterEnemy() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0) {
+                console.log(this.character.speedY);
                 enemy.die();
                 if (this.play_sounds) {
                     this.defeat_chicken_sound.play();
@@ -309,7 +310,7 @@ class World {
         this.checkThrowedBottleInterval = setInterval(() => {
             this.checkThrowObjects();
             this.coolDownBottle();
-        }, 300);
+        }, 350);
     }
 
 
@@ -319,7 +320,7 @@ class World {
     checkThrowObjects() {
         if (this.bottlesStatusbar.bottle_percentage > 0) {
             if (this.keyboard.F && this.coolDown <= 0) {
-                this.coolDown = 20;
+                this.coolDown = 60;
                 let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
                 this.throwableObjects.push(bottle);
                 if (this.play_sounds) {
