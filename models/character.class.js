@@ -181,14 +181,14 @@ class Character extends MoveableObject {
                     this.playAnimation(this.IMAGES_JUMPING);
                     i++;
                     console.log(i);
+                    this.resetWaitingState();
                 } else {
                     this.IMAGES_JUMPING[17];
-                    console.log(this.IMAGES_JUMPING[17]);
                 }
             } else {
                 i = 0;
             }
-        }, 80);
+        }, 50);
     }
 
 
