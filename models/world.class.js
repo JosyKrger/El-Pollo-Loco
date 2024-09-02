@@ -305,7 +305,7 @@ class World {
         this.clearIntervalsWhileRun();
         this.collisionsIntervall = setInterval(() => {
             this.checkCollisions();
-        }, 50);
+        }, 30);
         this.checkThrowedBottleInterval = setInterval(() => {
             this.checkThrowObjects();
             this.coolDownBottle();
