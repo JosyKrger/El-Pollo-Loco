@@ -31,6 +31,10 @@ class MoveableObject extends DrawableObejct {
     * @param {string[]} images - An array of image paths for animation.
     */
     playAnimation(images) {
+        if (this.currentAnimation !== images) {
+            this.currentAnimation = images;
+            this.currentImage = 0; // Zurücksetzen, wenn eine neue Animation gestartet wird
+        }
         let i = this.currentImage % images.length;
         let path = images[i];
         this.img = this.imageCache[path];

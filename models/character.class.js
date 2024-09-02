@@ -72,6 +72,7 @@ class Character extends MoveableObject {
         'img/2_character_pepe/5_dead/D-57.png'
     ];
     currentImage = 0;
+    currentAnimation = null;
     timeUntilSleepAnimation = false;
     characterIsSleepingTimeout;
     characterIsSleepingInterval;
@@ -171,22 +172,13 @@ class Character extends MoveableObject {
      * Runs at 10 frames per second.
      */
     characterIsJumping() {
-        let i = 0
         this.characterIsJumpingInterval = setInterval(() => {
             if (this.isDead() || this.isHurt()) {
                 return;
             }
             if (this.isAboveGround()) {
-                if (i < 18) {
-                    this.playAnimation(this.IMAGES_JUMPING);
-                    i++;
-                    console.log(i);
-                    this.resetWaitingState();
-                } else {
-                    this.IMAGES_JUMPING[17];
-                }
-            } else {
-                i = 0;
+                this.playAnimation(this.IMAGES_JUMPING);
+                this.resetWaitingState();
             }
         }, 50);
     }
