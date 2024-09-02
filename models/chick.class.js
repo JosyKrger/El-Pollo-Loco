@@ -15,9 +15,9 @@ class Chick extends MoveableObject {
     ];
     currentImage = 0;
     offset = {
-        top: 0,
-        left: 10,
-        right: 10,
+        top: -5,
+        left: 15,
+        right: 15,
         bottom: 0
     };
 

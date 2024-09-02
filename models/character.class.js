@@ -74,8 +74,8 @@ class Character extends MoveableObject {
     play_sounds = true;
     offset = {
         top: 100,
-        left: 20,
-        right: 20,
+        left: 33,
+        right: 33,
         bottom: 0
     };
 
