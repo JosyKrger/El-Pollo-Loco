@@ -191,7 +191,7 @@ class Endboss extends MoveableObject {
     */
     increaseEndbossSpeed() {
         this.playAnimation(this.IMAGES_WALKING);
-        this.speed = this.speed - 75;
+        this.speed = this.speed - 65;
         setTimeout(() => {
             this.speed = 5;
         }, 2600);

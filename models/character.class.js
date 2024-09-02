@@ -64,6 +64,9 @@ class Character extends MoveableObject {
     ];
     currentImage = 0;
     timeUntilSleepAnimation = false;
+    characterIsSleepingTimeout;
+    characterIsSleepingInterval;
+    characterIsWaitingInterval;
     world;
     isInvincible = false;
     walking_sound = new Audio('audio/running.mp3');
@@ -218,44 +221,69 @@ class Character extends MoveableObject {
      * Runs at approximately 4.35 frames per second.
      */
     characterIsWaiting() {
-        setInterval(() => {
+        clearTimeout(this.characterIsSleepingTimeout);
+        clearInterval(this.characterIsWaitingInterval); 
+        clearInterval(this.characterIsSleepingInterval); 
+
+        this.characterIsWaitingInterval = setInterval(() => {
             if (this.isDoingNothing() && !this.timeUntilSleepAnimation) {
                 this.playAnimation(this.IMAGES_IDLE);
-                setTimeout(() => {
-                    this.timeUntilSleepAnimation = true;
-                    this.characterIsSleeping();
-                }, 3000);
+                this.startSleepTimer();
             }
         }, 230);
     }
 
 
     /**
-    * Handles the sleeping animation of the character.
-    * The character plays the sleeping animation when it is idle and has not moved for a certain period.
-    * This method should be called when the character is supposed to be in a sleeping state.
+    * Starts the timeout to trigger the sleep animation after a period of inactivity.
     */
-    characterIsSleeping() {
-        if (this.isDoingNothing() && this.timeUntilSleepAnimation) {
-            this.playAnimation(this.IMAGES_SLEEPING);
-        } else {
-            this.timeUntilSleepAnimation = false;
+    startSleepTimer() {
+        if (!this.characterIsSleepingTimeout) { // Ensure that no timeout is already set
+            this.characterIsSleepingTimeout = setTimeout(() => {
+                this.timeUntilSleepAnimation = true;
+                this.characterIsSleeping();
+            }, 3000);
         }
     }
 
 
     /**
-     * Checks if the character is not performing any actions.
-     * 
-     * @returns {boolean} Returns true if the character is not moving or performing any actions, otherwise false.
-     */
+    * Handles the sleeping animation of the character.
+    * The character plays the sleeping animation when it is idle and has not moved for a certain period.
+    */
+    characterIsSleeping() {
+        if (this.timeUntilSleepAnimation) {
+            this.characterIsSleepingInterval = setInterval(() => {
+                this.playAnimation(this.IMAGES_SLEEPING);
+            }, 240);
+        }
+    }
+
+
+    /**
+    * Checks if the character is not performing any actions.
+    * 
+    * @returns {boolean} Returns true if the character is not moving or performing any actions, otherwise false.
+    */
     isDoingNothing() {
         if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.world.keyboard.F) {
             return true;
         } else {
-            this.timeUntilSleepAnimation = false;
+            this.resetWaitingState(); // Reset if any key is pressed
             return false;
         }
+    }
+
+
+    /**
+     * Resets the waiting state and cancels any sleep animation.
+     */
+    resetWaitingState() {
+        this.timeUntilSleepAnimation = false; // Reset sleep flag
+        clearTimeout(this.characterIsSleepingTimeout); // Clear the sleep timeout
+        this.characterIsSleepingTimeout = null; // Nullify the timeout reference
+        clearInterval(this.characterIsWaitingInterval); // Clear the waiting interval
+        this.characterIsWaiting(); // Restart the waiting logic
     }
 
 
