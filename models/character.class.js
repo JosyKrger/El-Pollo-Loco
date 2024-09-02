@@ -167,14 +167,14 @@ class Character extends MoveableObject {
                 return;
             }
             if (this.isAboveGround()) {
-                if (i < 7) {
+                if (i < 9) {
                     this.playAnimation(this.IMAGES_JUMPING);
                     i++;
                 } else {
                     i = 0;
                 }
             }
-        }, 110);
+        }, 250);
     }
 
 
@@ -222,8 +222,8 @@ class Character extends MoveableObject {
      */
     characterIsWaiting() {
         clearTimeout(this.characterIsSleepingTimeout);
-        clearInterval(this.characterIsWaitingInterval); 
-        clearInterval(this.characterIsSleepingInterval); 
+        clearInterval(this.characterIsWaitingInterval);
+        clearInterval(this.characterIsSleepingInterval);
 
         this.characterIsWaitingInterval = setInterval(() => {
             if (this.isDoingNothing() && !this.timeUntilSleepAnimation) {
@@ -279,9 +279,9 @@ class Character extends MoveableObject {
      * Resets the waiting state and cancels any sleep animation.
      */
     resetWaitingState() {
-        this.timeUntilSleepAnimation = false; 
+        this.timeUntilSleepAnimation = false;
         clearTimeout(this.characterIsSleepingTimeout);
-        this.characterIsSleepingTimeout = null; 
+        this.characterIsSleepingTimeout = null;
         clearInterval(this.characterIsWaitingInterval);
         this.characterIsWaiting();
     }
