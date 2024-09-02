@@ -161,8 +161,10 @@ class World {
     */
     collisionCharacterXCoordinate() {
         this.level.endboss.forEach((boss) => {
-            if (this.character.x >= 4200) {
-                boss.characterReachesBorder = true;
+            if (this.character.x >= 4500) {
+                setTimeout(() => {
+                    boss.characterReachesBorder = true;
+                }, 500);
             }
         });
     }

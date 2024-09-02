@@ -26,21 +26,29 @@ class Endboss extends MoveableObject {
 
     IMAGES_ATTACK = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
+        'img/4_enemie_boss_chicken/1_walk/G2.png',
+        'img/4_enemie_boss_chicken/1_walk/G3.png',
+        'img/4_enemie_boss_chicken/1_walk/G4.png',
         'img/4_enemie_boss_chicken/3_attack/G13.png',
-        'img/4_enemie_boss_chicken/1_walk/G2.png',
-        'img/4_enemie_boss_chicken/3_attack/G14.png',
-        'img/4_enemie_boss_chicken/1_walk/G3.png',
-        'img/4_enemie_boss_chicken/3_attack/G15.png',
-        'img/4_enemie_boss_chicken/1_walk/G4.png',
-        'img/4_enemie_boss_chicken/3_attack/G16.png',
         'img/4_enemie_boss_chicken/1_walk/G1.png',
-        'img/4_enemie_boss_chicken/3_attack/G17.png',
+        'img/4_enemie_boss_chicken/3_attack/G14.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',
-        'img/4_enemie_boss_chicken/3_attack/G18.png',
+        'img/4_enemie_boss_chicken/3_attack/G15.png',
         'img/4_enemie_boss_chicken/1_walk/G3.png',
-        'img/4_enemie_boss_chicken/3_attack/G19.png',
+        'img/4_enemie_boss_chicken/3_attack/G16.png',
         'img/4_enemie_boss_chicken/1_walk/G4.png',
-        'img/4_enemie_boss_chicken/3_attack/G20.png'
+        'img/4_enemie_boss_chicken/3_attack/G17.png',
+        'img/4_enemie_boss_chicken/1_walk/G1.png',
+        'img/4_enemie_boss_chicken/3_attack/G18.png',
+        'img/4_enemie_boss_chicken/1_walk/G2.png',
+        'img/4_enemie_boss_chicken/3_attack/G19.png',
+        'img/4_enemie_boss_chicken/1_walk/G3.png',
+        'img/4_enemie_boss_chicken/3_attack/G20.png',
+        'img/4_enemie_boss_chicken/1_walk/G4.png',
+        'img/4_enemie_boss_chicken/1_walk/G1.png',
+        'img/4_enemie_boss_chicken/1_walk/G2.png',
+        'img/4_enemie_boss_chicken/1_walk/G3.png',
+        'img/4_enemie_boss_chicken/1_walk/G4.png'
     ];
 
     IMAGES_HURT = [
@@ -59,6 +67,7 @@ class Endboss extends MoveableObject {
     currentImage = 0;
     world;
     characterReachesBorder = false;
+    endbossAlertInterval;
     isHurt = false;
     isDead = false;
     walkingAnimationInterval = null;
@@ -100,18 +109,17 @@ class Endboss extends MoveableObject {
     animate() {
         setInterval(() => {
             if (this.energy <= 0) {
-                this.endbossIsDead();
+                this.endbossIsDead(); 
                 gameWon();
             } else if (this.isHurt) {
                 this.increaseEndbossSpeed();
                 this.hurtAnimation();
-                //this.attackAnimation();
             } else if (this.characterReachesBorder) {
                 this.attackAnimation();
             } else {
-                this.waitingForCharacter();
+                this.endbossAlertAnimation();
             }
-        }, 300);
+        }, 200);
     }
 
 
@@ -120,23 +128,10 @@ class Endboss extends MoveableObject {
     * Plays the death animation and triggers the game win event.
     */
     endbossIsDead() {
-        let i = 0
-        if (i < 3) {
-            this.deathAnimation();
-        }
-        i++;
-    }
-
-
-    /**
-    * Handles the endboss's behavior when waiting for the character.
-    * Moves the endboss left and right while playing the walking animation.
-    */
-    waitingForCharacter() {
-        this.walkToLeft();
-        this.walkToRight();
-        this.playAnimation(this.IMAGES_WALKING);
-        this.x += this.speed;
+            this.playAnimation(this.IMAGES_DEAD);
+        setTimeout(() => {
+            this.world.clearAllIntervals();
+        }, 450);
     }
 
 
@@ -144,45 +139,24 @@ class Endboss extends MoveableObject {
     * Triggers the attack animation when the character reaches the endboss's border.
     */
     attackAnimation() {
-        let i = 0
-        if (i < 16) {
-            this.playAnimation(this.IMAGES_ATTACK);
-        }
-        i++;
-        setTimeout(() => {
-        this.otherDirection = false;
         this.walkToLeft();
-        this.x += this.speed;
-        this.playAnimation(this.IMAGES_WALKING);
-        }, 100);
+        this.playAnimation(this.IMAGES_ATTACK);
     }
 
-
-    /**
-    * Makes the endboss follow the character based on its position.
-    * Adjusts the endboss's position and direction based on the character's position.
-    */
-    followCharacter() {
-        this.playAnimation(this.IMAGES_WALKING);
-        if (this.world.character.x < this.x) {
-            this.x -= this.speed;
-            this.otherDirection = false;
-        } else if (this.world.character.x > this.x) {
-            this.x += this.speed;
-            this.otherDirection = true;
-        }
-    }
-
-
+ 
     /**
     * Plays the hurt animation for the endboss.
     */
     hurtAnimation() {
-        let i = 0
-        if (i < 3) {
-            this.playAnimation(this.IMAGES_HURT);
-        }
-        i++;
+        this.playAnimation(this.IMAGES_HURT);
+    }
+
+
+    /**
+    * Plays the alert animation for the endboss.
+    */
+    endbossAlertAnimation() {
+        this.playAnimation(this.IMAGES_ALERT);
     }
 
 
@@ -191,42 +165,10 @@ class Endboss extends MoveableObject {
     */
     increaseEndbossSpeed() {
         this.playAnimation(this.IMAGES_WALKING);
-        this.speed = this.speed - 70;
+        this.x = this.x - 100;
         setTimeout(() => {
-            this.speed = 5;
-        }, 2600);
-    }
-
-
-    /**
-    * Plays the death animation for the endboss and clears all intervals after a delay.
-    */
-    deathAnimation() {
-        this.playAnimation(this.IMAGES_DEAD);
-        setTimeout(() => {
-            this.world.clearAllIntervals();
-        }, 450);
-    }
-
-
-    /**
-    * Determines if the character is within a certain position relative to the endboss.
-    * 
-    * @returns {boolean} Always returns true.
-    */
-    characterPosition() {
-        return true;
-    }
-
-
-    /**
-    * Moves the endboss to the right if within bounds.
-    */
-    walkToRight() {
-        if (this.x <= 4800) {
-            this.speed = 5;
-            this.otherDirection = true;
-        }
+            this.x = this.x - 75;
+        }, 7800);
     }
 
 
@@ -234,9 +176,7 @@ class Endboss extends MoveableObject {
     * Moves the endboss to the left if within bounds.
     */
     walkToLeft() {
-        if (this.x >= 5000) {
-            this.speed = -5;
-            this.otherDirection = false;
-        }
+        this.x = this.x - 5;
+        this.otherDirection = false;
     }
 }
