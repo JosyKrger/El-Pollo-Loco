@@ -238,7 +238,7 @@ class Character extends MoveableObject {
     * Starts the timeout to trigger the sleep animation after a period of inactivity.
     */
     startSleepTimer() {
-        if (!this.characterIsSleepingTimeout) { // Ensure that no timeout is already set
+        if (!this.characterIsSleepingTimeout) {
             this.characterIsSleepingTimeout = setTimeout(() => {
                 this.timeUntilSleepAnimation = true;
                 this.characterIsSleeping();
@@ -269,7 +269,7 @@ class Character extends MoveableObject {
         if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.world.keyboard.F) {
             return true;
         } else {
-            this.resetWaitingState(); // Reset if any key is pressed
+            this.resetWaitingState();
             return false;
         }
     }
@@ -279,11 +279,11 @@ class Character extends MoveableObject {
      * Resets the waiting state and cancels any sleep animation.
      */
     resetWaitingState() {
-        this.timeUntilSleepAnimation = false; // Reset sleep flag
-        clearTimeout(this.characterIsSleepingTimeout); // Clear the sleep timeout
-        this.characterIsSleepingTimeout = null; // Nullify the timeout reference
-        clearInterval(this.characterIsWaitingInterval); // Clear the waiting interval
-        this.characterIsWaiting(); // Restart the waiting logic
+        this.timeUntilSleepAnimation = false; 
+        clearTimeout(this.characterIsSleepingTimeout);
+        this.characterIsSleepingTimeout = null; 
+        clearInterval(this.characterIsWaitingInterval);
+        this.characterIsWaiting();
     }
 
 
