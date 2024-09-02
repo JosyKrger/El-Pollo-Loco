@@ -39,13 +39,22 @@ class Character extends MoveableObject {
     ];
     IMAGES_JUMPING = [
         'img/2_character_pepe/3_jump/J-31.png',
+        'img/2_character_pepe/3_jump/J-31.png',
+        'img/2_character_pepe/3_jump/J-32.png',
         'img/2_character_pepe/3_jump/J-32.png',
         'img/2_character_pepe/3_jump/J-33.png',
+        'img/2_character_pepe/3_jump/J-33.png',
+        'img/2_character_pepe/3_jump/J-34.png',
         'img/2_character_pepe/3_jump/J-34.png',
         'img/2_character_pepe/3_jump/J-35.png',
+        'img/2_character_pepe/3_jump/J-35.png',
+        'img/2_character_pepe/3_jump/J-36.png',
         'img/2_character_pepe/3_jump/J-36.png',
         'img/2_character_pepe/3_jump/J-37.png',
+        'img/2_character_pepe/3_jump/J-37.png',
         'img/2_character_pepe/3_jump/J-38.png',
+        'img/2_character_pepe/3_jump/J-38.png',
+        'img/2_character_pepe/3_jump/J-39.png',
         'img/2_character_pepe/3_jump/J-39.png'
     ];
     IMAGES_HURT = [
@@ -67,6 +76,7 @@ class Character extends MoveableObject {
     characterIsSleepingTimeout;
     characterIsSleepingInterval;
     characterIsWaitingInterval;
+    characterIsJumpingInterval;
     world;
     isInvincible = false;
     walking_sound = new Audio('audio/running.mp3');
@@ -162,19 +172,23 @@ class Character extends MoveableObject {
      */
     characterIsJumping() {
         let i = 0
-        setInterval(() => {
+        this.characterIsJumpingInterval = setInterval(() => {
             if (this.isDead() || this.isHurt()) {
                 return;
             }
             if (this.isAboveGround()) {
-                if (i < 9) {
+                if (i < 18) {
                     this.playAnimation(this.IMAGES_JUMPING);
                     i++;
+                    console.log(i);
                 } else {
-                    i = 0;
+                    this.IMAGES_JUMPING[17];
+                    console.log(this.IMAGES_JUMPING[17]);
                 }
+            } else {
+                i = 0;
             }
-        }, 130);
+        }, 80);
     }
 
 
