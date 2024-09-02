@@ -244,6 +244,7 @@ class World {
                 return false;
             } else if (this.character.isColliding(enemy)) {
                 if (!this.character.isInvincible) {
+                    this.character.resetWaitingState();
                     this.character.hit();
                     if (this.play_sounds) {
                         this.get_damage_sound.play();

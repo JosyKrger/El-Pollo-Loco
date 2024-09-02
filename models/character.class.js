@@ -174,7 +174,7 @@ class Character extends MoveableObject {
                     i = 0;
                 }
             }
-        }, 250);
+        }, 130);
     }
 
 
@@ -208,8 +208,7 @@ class Character extends MoveableObject {
                     this.world.clearAllIntervals();
                 }, 450);
                 gameLost();
-                this.walking_sound.pause();
-                this.jumping_sound.pause();
+                this.stopCharacterSound();
             }
         }, 80);
     }
@@ -267,6 +266,7 @@ class Character extends MoveableObject {
     */
     isDoingNothing() {
         if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.world.keyboard.F) {
+            this.stopCharacterSound();
             return true;
         } else {
             this.resetWaitingState();
@@ -292,7 +292,6 @@ class Character extends MoveableObject {
      * Updates the character's position and plays the walking sound if the character is on the ground.
      */
     walkToRight() {
-        this.walking_sound.pause();
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.x += this.speed;
             this.otherDirection = false;

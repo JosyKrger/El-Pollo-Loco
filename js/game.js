@@ -23,7 +23,7 @@ function startGame() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     background_music.loop = true;
-    background_music.play();
+    background_music.play()
 }
 
 
