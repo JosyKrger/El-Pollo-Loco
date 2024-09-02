@@ -2,11 +2,11 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let background_music = new Audio('audio/backgroundmusic.mp3');
-background_music.volume = 0.5;
+background_music.volume = 0.3;
 let won_sound = new Audio('audio/win.mp3');
-won_sound.volume = 0.25;
+won_sound.volume = 0.15;
 let lost_sound = new Audio('audio/lost.mp3');
-lost_sound.volume = 0.25;
+lost_sound.volume = 0.15;
 
 
 /**
