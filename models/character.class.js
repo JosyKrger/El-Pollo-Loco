@@ -242,7 +242,7 @@ class Character extends MoveableObject {
             this.characterIsSleepingTimeout = setTimeout(() => {
                 this.timeUntilSleepAnimation = true;
                 this.characterIsSleeping();
-            }, 3000);
+            }, 5000);
         }
     }
 
