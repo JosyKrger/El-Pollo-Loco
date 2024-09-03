@@ -332,6 +332,7 @@ class Character extends MoveableObject {
      * Plays the jumping sound when the character jumps.
      */
     jump() {
+        this.walking_sound.pause();
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.speedY = 30;
             if (this.play_sounds) {
@@ -349,7 +350,7 @@ class Character extends MoveableObject {
         this.isInvincible = true;
         setTimeout(() => {
             this.isInvincible = false;
-        }, 1000);
+        }, 1200);
     }
 
 

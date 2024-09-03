@@ -58,12 +58,7 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
-        this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.clouds);
-        this.addObjectsToMap(this.level.bottles);
-        this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.level.endboss);
+        this.moveableObjects();
         this.staticObjects();
         this.addObjectsToMap(this.throwableObjects);
         this.addToMap(this.character);
@@ -71,6 +66,19 @@ class World {
         requestAnimationFrame(() => {
             this.draw();
         });
+    }
+
+
+    /**
+    * Draws moveaböe UI elements such as bottles, enemies and coins.
+    */
+    moveableObjects() {
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.endboss);
     }
 
 
@@ -196,22 +204,53 @@ class World {
         this.level.endboss.forEach((boss) => {
             this.throwableObjects.forEach((bottle, index) => {
                 if (bottle.isColliding(boss)) {
-                    boss.energy -= 20;
-                    this.throwableObjects.splice(index, 1);
-                    boss.isHurt = true;
-                    if (this.play_sounds) {
-                        this.hit_endboss_sound.play();
-                    }
-                    setTimeout(() => {
-                        boss.isHurt = false;
-                    }, 400);
-                    this.updateStatusBar();
-                    if (this.play_sounds) {
-                        this.broke_bottle_sound.play();
-                    }
+                    this.endbossWasHitWithBottle(boss, index);
                 }
             })
         });
+    }
+
+
+    /**
+    * Handles the event when the endboss is hit by a bottle.
+    * Reduces the boss's energy, removes the bottle from the game,
+    * plays the appropriate sound effects, and updates the status bar.
+    *
+    * @param {Object} boss - The endboss object that was hit.
+    * @param {number} index - The index of the bottle in the throwableObjects array.
+    */
+    endbossWasHitWithBottle(boss, index) {
+        boss.energy -= 20;
+        this.throwableObjects.splice(index, 1);
+        boss.isHurt = true;
+        this.endbossWasHitSound();
+        setTimeout(() => {
+            boss.isHurt = false;
+        }, 400);
+        this.updateStatusBar();
+        this.brokeBottleSound();
+    }
+
+
+    /**
+    * Plays the sound effect when the endboss is hit.
+    * The sound is only played if the sound setting is enabled.
+    */
+    endbossWasHitSound() {
+        if (this.play_sounds) {
+            this.hit_endboss_sound.play();
+        }
+    }
+
+
+    /**
+    * Plays the sound effect when a bottle breaks.
+    * The sound is only played if the sound setting is enabled.
+    */
+    brokeBottleSound() {
+        if (this.play_sounds) {
+            this.broke_bottle_sound.play();
+        }
     }
 
 
@@ -237,24 +276,47 @@ class World {
     collisionCharacterEnemy() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0) {
-                enemy.die();
-                if (this.play_sounds) {
-                    this.defeat_chicken_sound.play();
-                }
-                this.character.jumpAndActivateInvincibility();
-                return false;
+                this.collisionCharacterJumpsOnEnemy(enemy);
             } else if (this.character.isColliding(enemy)) {
-                if (!this.character.isInvincible) {
-                    this.character.resetWaitingState();
-                    this.character.hit();
-                    if (this.play_sounds) {
-                        this.get_damage_sound.play();
-                    }
-                    this.healthStatusbar.setHealthPercentage(this.character.energy);
-                }
+                this.collisionCharacterRunsAgainstEnemy();
             }
             return true;
         });
+    }
+
+
+    /**
+    * Handles the collision when the character jumps on an enemy.
+    * Triggers the enemy's death, plays the appropriate sound effect,
+    * and makes the character jump and become temporarily invincible.
+    *
+    * @param {Object} enemy - The enemy object that the character jumped on.
+    * @returns {boolean} - Always returns false to indicate the collision has been handled.
+    */
+    collisionCharacterJumpsOnEnemy(enemy) {
+        enemy.die();
+        if (this.play_sounds) {
+            this.defeat_chicken_sound.play();
+        }
+        this.character.jumpAndActivateInvincibility();
+        return false;
+    }
+
+
+    /**
+    * Handles the collision when the character runs into an enemy.
+    * If the character is not invincible, it triggers the character to get hurt,
+    * plays the appropriate sound effect, and updates the health status bar.
+    */
+    collisionCharacterRunsAgainstEnemy() {
+        if (!this.character.isInvincible) {
+            this.character.resetWaitingState();
+            this.character.hit();
+            if (this.play_sounds) {
+                this.get_damage_sound.play();
+            }
+            this.healthStatusbar.setHealthPercentage(this.character.energy);
+        }
     }
 
 
