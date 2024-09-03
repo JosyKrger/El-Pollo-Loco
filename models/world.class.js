@@ -373,7 +373,7 @@ class World {
         this.checkThrowedBottleInterval = setInterval(() => {
             this.checkThrowObjects();
             this.coolDownBottle();
-        }, 350);
+        }, 50);
     }
 
 
@@ -383,7 +383,7 @@ class World {
     checkThrowObjects() {
         if (this.bottlesStatusbar.bottle_percentage > 0) {
             if (this.keyboard.F && this.coolDown <= 0) {
-                this.coolDown = 60;
+                this.coolDown = 100;
                 let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
                 this.throwableObjects.push(bottle);
                 if (this.play_sounds) {
