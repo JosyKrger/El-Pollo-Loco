@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let playAudio = true;
 let background_music = new Audio('audio/backgroundmusic.mp3');
 background_music.volume = 0.3;
 let won_sound = new Audio('audio/win.mp3');
@@ -36,7 +37,9 @@ function gameWon() {
     document.getElementById('dialog-endscreen-won').classList.remove('d_none');
     document.getElementById('mobile-buttons').classList.add('d_none');
     document.getElementById('game-buttons').classList.add('d_none');
-    won_sound.play();
+    if (playAudio) {
+        won_sound.play();   
+    }
 }
 
 
@@ -49,7 +52,9 @@ function gameLost() {
     document.getElementById('dialog-endscreen-lost').classList.remove('d_none');
     document.getElementById('game-buttons').classList.add('d_none');
     document.getElementById('mobile-buttons').classList.add('d_none');
-    lost_sound.play();
+    if (playAudio) {
+        lost_sound.play();   
+    }
 }
 
 
@@ -107,6 +112,7 @@ function showImpressum() {
  */
 function turnMusicOff() {
     background_music.pause();
+    playAudio = false;
 }
 
 
@@ -115,6 +121,7 @@ function turnMusicOff() {
  */
 function turnMusicOn() {
     background_music.play();
+    playAudio = true;
 }
 
 
