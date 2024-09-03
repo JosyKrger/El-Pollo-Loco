@@ -33,7 +33,7 @@ class MoveableObject extends DrawableObejct {
     playAnimation(images) {
         if (this.currentAnimation !== images) {
             this.currentAnimation = images;
-            this.currentImage = 0; // Zurücksetzen, wenn eine neue Animation gestartet wird
+            this.currentImage = 0;
         }
         let i = this.currentImage % images.length;
         let path = images[i];
