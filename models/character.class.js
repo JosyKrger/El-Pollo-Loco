@@ -332,11 +332,11 @@ class Character extends MoveableObject {
      * Plays the jumping sound when the character jumps.
      */
     jump() {
-        this.walking_sound.pause();
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.speedY = 30;
             if (this.play_sounds) {
                 this.jumping_sound.play();
+                this.walking_sound.pause();
             }
         }
     }
